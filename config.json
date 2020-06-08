@@ -1,8 +1,25 @@
 {
+    "main": {
+        "theme": "default"
+    },
     "database": {
         "host": "localhost",
         "user": "root",
         "password": "",
-        "name": "sokit"
+        "name": "sokit",
+        "tables": {
+            "users": {
+                "id": "int(8)",
+                "username": "text(64)",
+                "password": "text(64)"
+            },
+            "sections": {
+                "id": "int(8)",
+                "title": "text(255)",
+                "description": "text",
+                "parent": "int(8)",
+                "user": "int(8)"
+            }
+        }
     }
 }
