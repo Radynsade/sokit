@@ -1,5 +1,9 @@
 <?php
 
+namespace core;
+
 class Builder {
-    public static function
+    public static function renderHead() {
+
+    }
 }

@@ -9,16 +9,16 @@
         "name": "sokit",
         "tables": {
             "users": {
-                "id": "int(8)",
-                "username": "text(64)",
-                "password": "text(64)"
+                "id": "!int(8)#",
+                "username": "!varchar(64)",
+                "password": "!varchar(64)"
             },
             "sections": {
-                "id": "int(8)",
-                "title": "text(255)",
-                "description": "text",
-                "parent": "int(8)",
-                "user": "int(8)"
+                "id": "!int(8)#",
+                "title": "!varchar(256)",
+                "description": "!text",
+                "parent": "!int(8)",
+                "user": "!int(8)"
             }
         }
     }

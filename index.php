@@ -2,7 +2,13 @@
 
 $config = json_decode(file_get_contents('config.json'), true);
 
-session_start();
+require './app/tools/Data.php';
+require './app/tools/File.php';
+require './app/core/Installer.php';
 
-echo 'Hey!';
-echo $config['database']['user'];
+core\Installer::init();
+
+$var = 'LALALA';
+echo "My var is {$var}";
+
+session_start();
