@@ -43,7 +43,7 @@ class Data {
         array $schema,
         string $engine = 'InnoDB'
     ) : void {
-        $this->query("CREATE TABLE IF NOT EXISTS `{$name}` " . Data::schemaToSQL($schema) . " ENGINE = {$engine}; \n\n");
+        $this->query("CREATE TABLE IF NOT EXISTS `{$name}` " . Data::schemaToSQL($schema) . " ENGINE = {$engine};");
     }
 
     private static function schemaToSQL(array $schema) : string {

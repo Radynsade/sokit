@@ -2,7 +2,6 @@
 
 namespace core;
 
-use mysqli;
 use tools\Data;
 
 class Installer {
@@ -15,7 +14,7 @@ class Installer {
     private static function deploy() : void {
         global $config;
 
-        Installer::createDatabase(
+        Installer::deployDatabase(
             $config['database']['host'],
             $config['database']['user'],
             $config['database']['password'],
@@ -32,16 +31,15 @@ class Installer {
         return file_exists('installed');
     }
 
-    private static function createDatabase($host, $user, $password, $name, $tables) {
-        $connect = new mysqli($host, $user, $password);
+    private static function deployDatabase($host, $user, $password, $name, $tables) : void {
+        $connect = new Data($host, $user, $password);
+        $connect->setDatabase($name);
 
-        if ($connect->connect_error) die('Соединениться не удалось: ' . $connect->connect_error);
+        foreach ($tables as $name => $schema) {
+            $connect->createTable($name, $schema);
+        }
 
-        $connect->set_charset('utf8');
-        $connect->query("CREATE DATABASE IF NOT EXISTS `{$name}`");
         $connect->close();
         unset($connect);
-
-        Data::schemaToSQL($tables);
     }
 }
