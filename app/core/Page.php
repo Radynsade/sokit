@@ -3,15 +3,16 @@
 namespace core;
 
 class Page {
-    public $metaData;
+    public $title;
+    public $description;
+    public $keywords;
+    public $author;
     public $content;
 
-    protected function setContent(string $fileName) {
+    protected function setContent(string $fileName) : void {
         ob_start();
         include_once './views/' . (new \ReflectionClass($this))->getShortName() . '/' . $fileName;
-        $content = ob_get_contents();
+        $this->content = ob_get_contents();
         ob_clean();
-
-        return $content;
     }
 }

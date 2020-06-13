@@ -2,6 +2,15 @@
     "main": {
         "theme": "default"
     },
+    "router": {
+        "404": "NotFound",
+        "routes": {
+            "Login": "",
+            "Register": "/register",
+            "Sections": "/sections",
+            "Section": "/section/:id"
+        }
+    },
     "database": {
         "host": "localhost",
         "user": "root",
