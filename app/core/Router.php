@@ -42,6 +42,8 @@ class Router {
         if (count($pathElements) === count($linkElements)) {
             if (count(array_uintersect($pathElements, $linkElements, [$this, 'compare'])) === count($pathElements)) {
                 return true;
+            } else {
+                $this->result['url'] = [];
             }
         }
 
