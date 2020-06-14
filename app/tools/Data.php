@@ -50,25 +50,30 @@ class Data {
         string $orderBy = 'id',
         string $order = 'DESC'
     ) : array {
-        $query = $this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}");
-        $result = [];
-
-        if ($query->num_rows > 0) {
-            while ($row = $query->fetch_assoc()) {
-                foreach ($row as $key => $value) {
-                    $result[][$key] = $value;
-                }
-            }
-        }
-
-        return $result;
+        return Data::fetchResult($this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}"));
     }
 
     public function getFrom(
         string $tableName,
-        array $data
+        array $columns,
+        array $data = ['orderBy' => ['id', 'DESC']]
     ) {
-        var_dump($data);
+        $columnsList = '';
+        $where = $data['where'] ? " WHERE `{$data['where'][0]}` = '{$data['where'][1]}' " : '';
+
+        if (!empty($columns)) {
+            foreach ($columns as $column) {
+                $columnsList .= "`{$column}`, ";
+            }
+        } else {
+            $columnsList = '*';
+        }
+
+        $columnsList = substr($columnsList, 0, -2);
+
+        return Data::fetchResult(
+            $this->query("SELECT {$columnsList} from `{$tableName}`" . $where . "ORDER BY `{$data['orderBy'][0]}` {$data['orderBy'][1]};")
+        );
     }
 
     public function addTo(
@@ -95,6 +100,20 @@ class Data {
         string $engine = 'InnoDB'
     ) : void {
         $this->query("CREATE TABLE IF NOT EXISTS `{$name}` " . Data::schemaToSQL($schema) . " ENGINE = {$engine};");
+    }
+
+    private static function fetchResult(object $queryResult) : array {
+        $result = [];
+
+        if ($queryResult->num_rows > 0) {
+            while ($row = $queryResult->fetch_assoc()) {
+                foreach ($row as $key => $value) {
+                    $result[][$key] = $value;
+                }
+            }
+        }
+
+        return $result;
     }
 
     private static function schemaToSQL(array $schema) : string {

@@ -17,17 +17,22 @@ final class Register extends Page {
 
     private function onFormSubmit() : void {
         if (!empty($_POST['completeReg'])) {
+            global $connect;
+
             if ($_POST['newPassword'] !== $_POST['repeatPassword']) {
                 $this->errorMessage = 'Пароли должны совпадать!';
                 return;
             }
 
-            global $connect;
-
-            $connect->getFrom('users', ['username'], [
-                'where' => [$_POST['newUsername'] => 'username'],
-                'orderBy' => ['id' => 'desc']
+            $sameUsernames = $connect->getFrom('users', ['username'], [
+                'where' => ['username', $_POST['username']],
+                'orderBy' => ['id', 'DESC']
             ]);
+
+            if (!empty($sameUsernames)) {
+                $this->errorMessage = 'Пользователь с таким именем уже существует!';
+                return;
+            }
 
             $connect->addTo('users', [
                 $_POST['username'] => 'username',
