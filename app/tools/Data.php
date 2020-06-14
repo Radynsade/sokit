@@ -38,6 +38,24 @@ class Data {
         $this->connect->select_db($name);
     }
 
+    public function addTo(
+        string $tableName,
+        array $valuesToFields
+    ) : void {
+        $values = '';
+        $fields = '';
+
+        foreach ($valuesToFields as $value => $field) {
+            $values .= "'{$value}', ";
+            $fields .= "`{$field}`, ";
+        }
+
+        $values = substr($values, 0, -2);
+        $fields = substr($fields, 0, -2);
+
+        $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
+    }
+
     public function createTable(
         string $name,
         array $schema,

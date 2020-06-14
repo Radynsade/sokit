@@ -6,6 +6,7 @@ require './app/core/Router.php';
 require './app/core/Page.php';
 require './app/core/Builder.php';
 
+use tools\Data;
 use core\Installer;
 use core\Router;
 use core\Builder;
@@ -17,6 +18,14 @@ $config = json_decode(file_get_contents('config.json'), true);
 
 // Check if website is deployed and deploy it using configuration if not
 Installer::init($config);
+
+// Create global connection
+$connect = new Data(
+    $config['database']['host'],
+    $config['database']['user'],
+    $config['database']['password'],
+    $config['database']['name'],
+);
 
 // Create router
 $router = new Router($config['router']);
