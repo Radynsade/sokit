@@ -1,23 +1,28 @@
 <section>
-    <?php if (!empty($this->errorMessage)) { ?>
-        <div class="error-message"><?= $this->errorMessage ?></div>
-    <?php } ?>
-    <form method="POST" action="">
-        <label class="field">
-            <div>Имя пользователя</div>
-            <input type="text" name="username" required>
-        </label>
-        <label class="field">
-            <div>Придумайте пароль</div>
-            <input type="password" name="newPassword" required>
-        </label>
-        <label class="field">
-            <div>Повторите пароль</div>
-            <input type="password" name="repeatPassword" required>
-        </label>
-        <div class="field-set">
-            <input type="submit" name="completeReg" value="Завершить">
-            <a href="/">Вернуться назад</a>
-        </div>
-    </form>
+    <header>
+        <h1>Регистрация</h1>
+    </header>
+    <article>
+        <?php if (!empty($this->errorMessage)) { ?>
+            <div class="error-message"><?= $this->errorMessage ?></div>
+        <?php } ?>
+        <form method="POST" action="">
+            <label class="field">
+                <div>Имя пользователя</div>
+                <input type="text" name="username" required>
+            </label>
+            <label class="field">
+                <div>Придумайте пароль</div>
+                <input type="password" name="newPassword" required>
+            </label>
+            <label class="field">
+                <div>Повторите пароль</div>
+                <input type="password" name="repeatPassword" required>
+            </label>
+            <div class="field-set">
+                <input type="submit" name="completeReg" value="Завершить">
+                <a href="/">Вернуться назад</a>
+            </div>
+        </form>
+    </article>
 </section>

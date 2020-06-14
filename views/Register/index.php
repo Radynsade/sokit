@@ -3,6 +3,7 @@
 namespace views\Register;
 
 use core\Page;
+use tools\Auth;
 
 final class Register extends Page {
     public $errorMessage;
@@ -36,8 +37,10 @@ final class Register extends Page {
 
             $connect->addTo('users', [
                 $_POST['username'] => 'username',
-                $_POST['newPassword'] => 'password'
+                Auth::hashPassword($_POST['newPassword']) => 'password'
             ]);
+
+            Auth::signIn($_POST['username'], '/sections');
         }
     }
 }

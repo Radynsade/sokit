@@ -1,16 +1,24 @@
 <section>
-    <form method="POST" action="">
-        <label class="field">
-            <div>Имя пользователя</div>
-            <input type="text" name="username" required>
-        </label>
-        <label class="field">
-            <div>Пароль</div>
-            <input type="password" name="password" required>
-        </label>
-        <div class="field-set">
-            <input type="submit" value="Войти">
-            <a href="/register">Зарегистрироваться</a>
-        </div>
-    </form>
+    <header>
+        <h1>Вход</h1>
+    </header>
+    <article>
+        <?php if (!empty($this->errorMessage)) { ?>
+            <div class="error-message"><?= $this->errorMessage ?></div>
+        <?php } ?>
+        <form method="POST" action="">
+            <label class="field">
+                <div>Имя пользователя</div>
+                <input type="text" name="username" required>
+            </label>
+            <label class="field">
+                <div>Пароль</div>
+                <input type="password" name="password" required>
+            </label>
+            <div class="field-set">
+                <input type="submit" name="completeLogin" value="Войти">
+                <a href="/register">Зарегистрироваться</a>
+            </div>
+        </form>
+    </article>
 </section>

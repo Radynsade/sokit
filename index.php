@@ -1,6 +1,7 @@
 <?php
 
 require './app/tools/Data.php';
+require './app/tools/Auth.php';
 require './app/core/Installer.php';
 require './app/core/Router.php';
 require './app/core/Page.php';

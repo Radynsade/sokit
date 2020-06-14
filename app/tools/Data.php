@@ -56,10 +56,11 @@ class Data {
     public function getFrom(
         string $tableName,
         array $columns,
-        array $data = ['orderBy' => ['id', 'DESC']]
+        array $data = []
     ) {
         $columnsList = '';
-        $where = $data['where'] ? " WHERE `{$data['where'][0]}` = '{$data['where'][1]}' " : '';
+        $where = isset($data['where']) ? " WHERE `{$data['where'][0]}` = '{$data['where'][1]}' " : '';
+        $orderBy = isset($data['orderBy']) ? "ORDER BY `{$data['orderBy'][0]}` {$data['orderBy'][1]}" : '';
 
         if (!empty($columns)) {
             foreach ($columns as $column) {
@@ -72,7 +73,7 @@ class Data {
         $columnsList = substr($columnsList, 0, -2);
 
         return Data::fetchResult(
-            $this->query("SELECT {$columnsList} from `{$tableName}`" . $where . "ORDER BY `{$data['orderBy'][0]}` {$data['orderBy'][1]};")
+            $this->query("SELECT {$columnsList} from `{$tableName}`" . $where . $orderBy . ';')
         );
     }
 
@@ -108,7 +109,7 @@ class Data {
         if ($queryResult->num_rows > 0) {
             while ($row = $queryResult->fetch_assoc()) {
                 foreach ($row as $key => $value) {
-                    $result[][$key] = $value;
+                    $result[$key] = $value;
                 }
             }
         }
