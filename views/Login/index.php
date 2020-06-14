@@ -4,7 +4,7 @@ namespace views\Login;
 
 use core\Page;
 
-class Login extends Page {
+final class Login extends Page {
     public function __construct() {
         $this->title = 'Вход';
         $this->description = 'Страница авторизации';

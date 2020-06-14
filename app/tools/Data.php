@@ -49,7 +49,7 @@ class Data {
         string $tableName,
         string $orderBy = 'id',
         string $order = 'DESC'
-    ) {
+    ) : array {
         $query = $this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}");
         $result = [];
 
@@ -62,6 +62,13 @@ class Data {
         }
 
         return $result;
+    }
+
+    public function getFrom(
+        string $tableName,
+        array $data
+    ) {
+        var_dump($data);
     }
 
     public function addTo(

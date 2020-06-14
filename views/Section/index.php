@@ -4,7 +4,7 @@ namespace views\Section;
 
 use core\Page;
 
-class Section extends Page {
+final class Section extends Page {
     public function __construct() {
         $this->title = 'Раздел ###';
         $this->description = 'Страница раздела ###';

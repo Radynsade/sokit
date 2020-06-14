@@ -4,7 +4,7 @@ namespace views\NotFound;
 
 use core\Page;
 
-class NotFound extends Page {
+final class NotFound extends Page {
     public function __construct() {
         $this->title = 'Страница не найдена';
         $this->description = 'Такой страницы не существует';
