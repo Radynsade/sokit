@@ -1,0 +1,60 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    display: block;
+
+    &.field {
+        margin-bottom: 18px;
+        font-weight: #{$roboto-medium};
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        div {
+            padding-bottom: 8px;
+        }
+
+        input {
+            border: 1px solid #{$gray};
+            border-radius: 3px;
+            display: block;
+            padding: 10px 12px;
+            width: 100%;
+            box-shadow: 0 1px 3px #00000008 inset;
+            font-size: .9rem;
+
+            &:hover {
+                border-color: #{$dark-gray};
+            }
+
+            &:focus {
+                border-color: #{$link-blue};
+                box-shadow: 0 1px 3px #00000008 inset, 0 0 0 1px #56c6fa;
+            }
+        }
+    }
+}
+
+input[type=button],
+input[type=submit] {
+    background-color: #{$link-blue-dark};
+    border-radius: 3px;
+    color: #{$snow};
+    font-weight: #{$roboto-medium};
+    padding: 10px 12px;
+
+    &:hover {
+        background-color: #{$link-blue-medium};
+    }
+}
+
+.field-set {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}

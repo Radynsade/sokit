@@ -1,0 +1,18 @@
+* {
+    color: #{$mine-shaft};
+    font-family: #{$roboto};
+    font-size: 14px;
+}
+
+a {
+    color: #{$link-blue-sea};
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+::selection {
+    color: white;
+    background: #63e28d;
+}

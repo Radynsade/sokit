@@ -7,17 +7,11 @@
         <meta name="description" content="<?= $page->description ?>">
         <meta name="author" content="<?= $page->author ?>">
         <meta name="keywords" content="<?= $page->keywords ?>">
-        <link rel="stylesheet" href="/themes/<?= $config['main']['theme'] ?>/styles/style.css" media="all">
+        <link rel="stylesheet" href="/themes/<?= $themeName ?>/styles/style.css" media="all">
     </head>
     <body>
-        <header>
-            Sok-It Тест
-        </header>
-        <main>
+        <main id="<?= $viewName ?>">
             <?= $page->content ?>
         </main>
-        <footer>
-            Никита Прокопенко
-        </footer>
     </body>
 </html>

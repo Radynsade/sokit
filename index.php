@@ -10,18 +10,21 @@ use core\Installer;
 use core\Router;
 use core\Builder;
 
-// Check if website is deployed and deploy it if not
-Installer::init();
+session_start();
 
 // Read config file
 $config = json_decode(file_get_contents('config.json'), true);
+
+// Check if website is deployed and deploy it using configuration if not
+Installer::init($config);
 
 // Create router
 $router = new Router($config['router']);
 $router->readPath($_SERVER['REQUEST_URI']);
 
-session_start();
+// Render page
+Builder::render($router->result['view'], $config['main']['theme']);
 
-if (empty($_SESSION['id'])) {
-    Builder::render('Login');
-}
+// if (empty($_SESSION['id'])) {
+    // Builder::render('Login');
+// }

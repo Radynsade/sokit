@@ -3,13 +3,14 @@
 namespace core;
 
 class Builder {
-    public static function render(string $viewName) : void {
-        global $config;
-
+    public static function render(
+        string $viewName,
+        string $themeName
+    ) : void {
         include_once "./views/{$viewName}/index.php";
         $class = 'views\\' . $viewName . '\\' . $viewName;
         $page = new $class;
 
-        include_once "./themes/{$config['main']['theme']}/Template.phtml";
+        include_once "./themes/{$themeName}/Template.phtml";
     }
 }

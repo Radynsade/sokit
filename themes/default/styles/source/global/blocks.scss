@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #{$snow};
+    margin: 0;
+}
+
+header {
+    color: #{$snow};
+    padding: 12px 20px;
+    font-size: 2.6rem;
+    font-family: #{$nunito};
+    font-weight: #{$nunito-bold};
+    background-color: #{$mine-shaft};
+}
+
+section {
+    background-color: #{$white};
+    border: 1px solid #{$gray};
+    border-radius: 8px;
+    padding: 24px;
+}
+
+main {
+    flex: 1;
+    margin: 0 auto;
+    width: 800px;
+}

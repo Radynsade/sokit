@@ -14,6 +14,7 @@ class Router {
 
     public function readPath(string $path) : void {
         $pathElements = Router::splitPath($path);
+        $this->result['view'] = $this->notFound;
 
         foreach ($this->routes as $view => $link) {
             $linkElements = array_filter(explode('/', substr($link, 1)));
@@ -23,8 +24,6 @@ class Router {
                 break;
             }
         }
-
-        var_dump($this->result);
     }
 
     private function compare(string $pathElement, string $linkElement) : int {

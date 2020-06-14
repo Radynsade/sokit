@@ -5,15 +5,13 @@ namespace core;
 use tools\Data;
 
 class Installer {
-    public static function init() : void {
+    public static function init(array $config) : void {
         if (!Installer::isInstalled()) {
-            Installer::deploy();
+            Installer::deploy($config);
         }
     }
 
-    private static function deploy() : void {
-        global $config;
-
+    private static function deploy(array $config) : void {
         Installer::deployDatabase(
             $config['database']['host'],
             $config['database']['user'],
@@ -31,7 +29,13 @@ class Installer {
         return file_exists('installed');
     }
 
-    private static function deployDatabase($host, $user, $password, $name, $tables) : void {
+    private static function deployDatabase(
+        string $host,
+        string $user,
+        string $password,
+        string $name,
+        array $tables
+    ) : void {
         $connect = new Data($host, $user, $password);
         $connect->setDatabase($name);
 
