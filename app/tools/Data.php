@@ -29,8 +29,15 @@ class Data {
         $this->connect->close();
     }
 
-    public function query($sql) : void {
-        if (!$this->connect->query($sql)) echo "Ошибка MySQL: {$this->connect->error}";
+    public function query($sql) {
+        $query = $this->connect->query($sql);
+
+        if (!$query) {
+            echo "Ошибка MySQL: {$this->connect->error}";
+            return null;
+        }
+
+        return $query;
     }
 
     public function setDatabase(string $name) : void {
@@ -38,10 +45,29 @@ class Data {
         $this->connect->select_db($name);
     }
 
+    public function getAllFrom(
+        string $tableName,
+        string $orderBy = 'id',
+        string $order = 'DESC'
+    ) {
+        $query = $this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}");
+        $result = [];
+
+        if ($query->num_rows > 0) {
+            while ($row = $query->fetch_assoc()) {
+                foreach ($row as $key => $value) {
+                    $result[][$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
     public function addTo(
         string $tableName,
         array $valuesToFields
-    ) : void {
+    ) : bool {
         $values = '';
         $fields = '';
 
@@ -53,7 +79,7 @@ class Data {
         $values = substr($values, 0, -2);
         $fields = substr($fields, 0, -2);
 
-        $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
+        return $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
     }
 
     public function createTable(

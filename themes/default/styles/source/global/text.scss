@@ -12,6 +12,12 @@ a {
     }
 }
 
+.error-message {
+    color: #{$red-dark};
+    margin-bottom: 12px;
+    text-align: center;
+}
+
 ::selection {
     color: white;
     background: #{$link-blue-medium};

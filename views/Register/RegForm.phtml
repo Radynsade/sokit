@@ -1,4 +1,7 @@
 <section>
+    <?php if (!empty($this->errorMessage)) { ?>
+        <div class="error-message"><?= $this->errorMessage ?></div>
+    <?php } ?>
     <form method="POST" action="">
         <label class="field">
             <div>Имя пользователя</div>
@@ -6,11 +9,11 @@
         </label>
         <label class="field">
             <div>Придумайте пароль</div>
-            <input type="password" name="password" required>
+            <input type="password" name="newPassword" required>
         </label>
         <label class="field">
             <div>Повторите пароль</div>
-            <input type="password" name="password" required>
+            <input type="password" name="repeatPassword" required>
         </label>
         <div class="field-set">
             <input type="submit" name="completeReg" value="Завершить">
