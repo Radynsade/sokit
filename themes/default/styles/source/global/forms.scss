@@ -47,7 +47,11 @@ input[type=submit] {
     padding: 10px 12px;
 
     &:hover {
-        background-color: #{$link-blue-medium};
+        background: #{$link-light-gradient};
+    }
+
+    &:active {
+        background: #{$link-dark-gradient};
     }
 }
 

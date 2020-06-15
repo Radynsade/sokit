@@ -14,9 +14,6 @@ final class Login extends Page {
         $this->description = 'Страница авторизации';
         $this->keywords = 'вход, страница, авторизация, авторизации, логин';
         $this->onFormSubmit();
-
-
-
         $this->setContent('LoginForm.phtml');
     }
 
