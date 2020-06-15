@@ -1,0 +1,10 @@
+#Sections {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    > section {
+        width: 100%;
+    }
+}

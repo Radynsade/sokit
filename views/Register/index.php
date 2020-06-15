@@ -40,7 +40,7 @@ final class Register extends Page {
                 Auth::hashPassword($_POST['newPassword']) => 'password'
             ]);
 
-            Auth::signIn($_POST['username'], '/sections');
+            Auth::signIn($_POST['username'], '/');
         }
     }
 }

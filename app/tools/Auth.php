@@ -13,7 +13,14 @@ class Auth {
 
     public static function signIn(string $user, string $location) : void {
         $_SESSION['user'] = $user;
-        header('Location: /sections');
+        header("Location: {$location}");
+        die();
+    }
+
+    public static function exit(string $location) : void {
+        unset($_SESSION['user']);
+        session_destroy();
+        header("Location: {$location}");
         die();
     }
 }

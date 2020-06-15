@@ -5,10 +5,10 @@
     "router": {
         "404": "NotFound",
         "routes": {
-            "Login": "",
-            "Register": "/register",
-            "Sections": "/sections",
-            "Section": "/section/:id"
+            "Sections": "",
+            "Section": "/section/:id",
+            "Login": "/login",
+            "Register": "/register"
         }
     },
     "database": {

@@ -9,6 +9,7 @@ final class Login extends Page {
     public $errorMessage;
 
     public function __construct() {
+        $this->beforeLoad();
         $this->title = 'Вход';
         $this->description = 'Страница авторизации';
         $this->keywords = 'вход, страница, авторизация, авторизации, логин';
@@ -24,8 +25,6 @@ final class Login extends Page {
                 'where' => ['username', $_POST['username']]
             ]);
 
-            var_dump($userData);
-
             if (empty($userData)) {
                 $this->errorMessage = 'Такого пользователя не существует!';
                 return;
@@ -36,7 +35,14 @@ final class Login extends Page {
                 return;
             }
 
-            Auth::signIn($_POST['username'], '/sections');
+            Auth::signIn($_POST['username'], '/');
         }
+    }
+
+    private function beforeLoad() : void {
+        if (!empty($_SESSION['user'])) {
+            header('Location: /');
+            die();
+        };
     }
 }
