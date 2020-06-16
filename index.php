@@ -1,18 +1,12 @@
 <?php
 
-require './app/tools/Data.php';
-require './app/tools/Auth.php';
-require './app/tools/Crypter.php';
-require './app/core/Installer.php';
-require './app/core/Router.php';
-require './app/core/Page.php';
-require './app/core/Builder.php';
+require './autoloader.php';
 
-use tools\Crypter;
-use tools\Data;
+use core\tools\Data;
 use core\Installer;
 use core\Router;
 use core\Builder;
+use libraries\Crypter;
 
 session_start();
 
@@ -30,12 +24,8 @@ $connect = new Data(
     $config['database']['name'],
 );
 
-// Create encrypter
-$crypter = new Crypter('aria-256-cfb8','1234567891011121','Sokit');
-$encrypted = $crypter->encrypt('Lalalallaa aksdgajsglkatlas sldkfhj;ldfjh gkasldjgklasdjglkjasdg');
-$decrypted = $crypter->decrypt($encrypted);
-var_dump($encrypted);
-var_dump($decrypted);
+// Create encrypter for user login
+$loginCrypter = new Crypter('AES-128-CBC','8259561259121120','Sokit2Key');
 
 // Create router
 $router = new Router($config['router']);
@@ -43,10 +33,3 @@ $router->readPath($_SERVER['REQUEST_URI']);
 
 // Render page
 Builder::render($router->result['view'], $config['main']['theme']);
-
-
-
-
-// if (empty($_SESSION['id'])) {
-    // Builder::render('Login');
-// }

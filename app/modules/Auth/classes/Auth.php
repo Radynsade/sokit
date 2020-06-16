@@ -1,6 +1,6 @@
 <?php
 
-namespace tools;
+namespace modules\Auth;
 
 class Auth {
     public static function hashPassword(string $password) : string {

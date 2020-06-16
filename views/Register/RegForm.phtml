@@ -9,15 +9,15 @@
         <form method="POST" action="">
             <label class="field">
                 <div>Имя пользователя</div>
-                <input type="text" name="username" required>
+                <input type="text" name="username" minlength="4" maxlength="32" required>
             </label>
             <label class="field">
                 <div>Придумайте пароль</div>
-                <input type="password" name="newPassword" required>
+                <input type="password" name="newPassword" minlength="8" maxlength="64" required>
             </label>
             <label class="field">
                 <div>Повторите пароль</div>
-                <input type="password" name="repeatPassword" required>
+                <input type="password" name="repeatPassword" minlength="8" maxlength="64" required>
             </label>
             <div class="field-set">
                 <input type="submit" name="completeReg" value="Завершить">

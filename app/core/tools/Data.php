@@ -1,6 +1,6 @@
 <?php
 
-namespace tools;
+namespace core\tools;
 
 use mysqli;
 

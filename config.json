@@ -8,7 +8,8 @@
             "Sections": "",
             "Section": "/section/:id",
             "Login": "/login",
-            "Register": "/register"
+            "Register": "/register",
+            "EditPost": "/edit"
         }
     },
     "database": {
@@ -27,12 +28,12 @@
                 },
                 "username": {
                     "type": "varchar",
-                    "length": 64,
+                    "length": 255,
                     "null": false
                 },
                 "password": {
                     "type": "varchar",
-                    "length": 256,
+                    "length": 255,
                     "null": false
                 }
             },

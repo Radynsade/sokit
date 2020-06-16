@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Router {
+final class Router {
     public $routes;
     public $notFound;
     public $result = [];

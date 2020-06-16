@@ -3,7 +3,7 @@
 namespace views\Login;
 
 use core\Page;
-use tools\Auth;
+use libraries\Auth;
 
 final class Login extends Page {
     public $errorMessage;
@@ -14,18 +14,18 @@ final class Login extends Page {
         $this->description = 'Страница авторизации';
         $this->keywords = 'вход, страница, авторизация, авторизации, логин';
         $this->onFormSubmit();
-
-
-
         $this->setContent('LoginForm.phtml');
     }
 
     private function onFormSubmit() : void {
         if (!empty($_POST['completeLogin'])) {
             global $connect;
+            global $loginCrypter;
+
+            $encryptedLogin = $loginCrypter->encrypt($_POST['username']);
 
             $userData = $connect->getFrom('users', ['username', 'password'], [
-                'where' => ['username', $_POST['username']]
+                'where' => ['username', $encryptedLogin]
             ]);
 
             if (empty($userData)) {
@@ -38,7 +38,7 @@ final class Login extends Page {
                 return;
             }
 
-            Auth::signIn($_POST['username'], '/');
+            Auth::signIn($encryptedLogin, '/');
         }
     }
 

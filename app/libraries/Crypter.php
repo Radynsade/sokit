@@ -1,6 +1,6 @@
 <?php
 
-namespace tools;
+namespace libraries;
 
 class Crypter {
     private $ciphering;
@@ -23,13 +23,14 @@ class Crypter {
     }
 
     public function encrypt(string $textToCrypt) {
-        return openssl_encrypt(
+        $encrypted = openssl_encrypt(
             $textToCrypt,
             $this->ciphering,
             $this->encryptionKey,
             $this->options,
             $this->encryptionIV
         );
+        return $encrypted;
     }
 
     public function decrypt(string $textToDecrypt) {

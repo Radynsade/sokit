@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Builder {
+final class Builder {
     public static function render(
         string $viewName,
         string $themeName

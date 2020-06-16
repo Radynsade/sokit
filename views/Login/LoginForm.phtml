@@ -9,11 +9,11 @@
         <form method="POST" action="">
             <label class="field">
                 <div>Имя пользователя</div>
-                <input type="text" name="username" required>
+                <input type="text" name="username" minlength="4" maxlength="32" required>
             </label>
             <label class="field">
                 <div>Пароль</div>
-                <input type="password" name="password" required>
+                <input type="password" name="password" minlength="8" maxlength="64" required>
             </label>
             <div class="field-set">
                 <input type="submit" name="completeLogin" value="Войти">

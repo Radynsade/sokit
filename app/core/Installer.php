@@ -2,9 +2,9 @@
 
 namespace core;
 
-use tools\Data;
+use core\tools\Data;
 
-class Installer {
+final class Installer {
     public static function init(array $config) : void {
         if (!Installer::isInstalled()) {
             Installer::deploy($config);
@@ -27,6 +27,10 @@ class Installer {
 
     private static function isInstalled() : bool {
         return file_exists('installed');
+    }
+
+    private static function deployModules() : void {
+
     }
 
     private static function deployDatabase(

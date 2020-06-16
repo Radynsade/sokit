@@ -41,6 +41,7 @@ main {
 .toolbar {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     margin-bottom: 16px;
 }
 
@@ -54,6 +55,14 @@ main {
 
         &:nth-child(2n) {
             background-color: #{$snow};
+        }
+
+        .tools {
+            display: flex;
+
+            a {
+                margin-left: 16px;
+            }
         }
     }
 }
