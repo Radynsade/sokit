@@ -16,12 +16,23 @@ final class Router {
         $pathElements = Router::splitPath($path);
         $this->result['view'] = $this->notFound;
 
-        foreach ($this->routes as $view => $link) {
-            $linkElements = array_filter(explode('/', substr($link, 1)));
+        foreach ($this->routes as $view => $links) {
+            if (is_array($links)) {
+                foreach ($links as $link) {
+                    $linkElements = array_filter(explode('/', substr($link, 1)));
 
-            if ($this->isMatches($pathElements, $linkElements)) {
-                $this->result['view'] = $view;
-                break;
+                    if ($this->isMatches($pathElements, $linkElements)) {
+                        $this->result['view'] = $view;
+                        break;
+                    }
+                }
+            } else {
+                $linkElements = array_filter(explode('/', substr($links, 1)));
+
+                if ($this->isMatches($pathElements, $linkElements)) {
+                    $this->result['view'] = $view;
+                    break;
+                }
             }
         }
     }

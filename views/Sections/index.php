@@ -25,7 +25,7 @@ final class Sections extends Page {
     private function onFormSubmit() : void {
         if (!empty($_POST['addPost'])) {
             echo 1;
-            header('Location: /edit');
+            header('Location: /add');
             die();
         }
 

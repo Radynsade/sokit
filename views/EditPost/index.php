@@ -1,48 +1,36 @@
 <?php
 
-namespace views\Login;
+namespace views\EditPost;
 
 use core\Page;
-use tools\Auth;
+use modules\Auth\Auth;
 
-final class Login extends Page {
-    public $errorMessage;
-
+final class EditPost extends Page {
     public function __construct() {
         $this->beforeLoad();
-        $this->title = 'Вход';
-        $this->description = 'Страница авторизации';
-        $this->keywords = 'вход, страница, авторизация, авторизации, логин';
+        $this->title = 'Разделы';
+        $this->description = 'Страница разделов пользователя';
+        $this->keywords = 'страница, разделы, разделов, пользователь, профиль, пользователя';
         $this->onFormSubmit();
-        $this->setContent('LoginForm.phtml');
-    }
-
-    private function onFormSubmit() : void {
-        if (!empty($_POST['completeLogin'])) {
-            global $connect;
-
-            $userData = $connect->getFrom('users', ['username', 'password'], [
-                'where' => ['username', $_POST['username']]
-            ]);
-
-            if (empty($userData)) {
-                $this->errorMessage = 'Такого пользователя не существует!';
-                return;
-            }
-
-            if (!Auth::verifyPassword($_POST['password'], $userData['password'])) {
-                $this->errorMessage = 'Неверный пароль!';
-                return;
-            }
-
-            Auth::signIn($_POST['username'], '/');
-        }
+        $this->setContent('EditForm.phtml');
     }
 
     private function beforeLoad() : void {
-        if (!empty($_SESSION['user'])) {
-            header('Location: /');
+        if (empty($_SESSION['user'])) {
+            header('Location: /login');
             die();
         };
+    }
+
+    private function onFormSubmit() : void {
+        if (!empty($_POST['addPost'])) {
+            echo 1;
+            header('Location: /edit');
+            die();
+        }
+
+        if (!empty($_POST['exit'])) {
+            Auth::exit('/');
+        }
     }
 }

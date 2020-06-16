@@ -9,7 +9,7 @@
             "Section": "/section/:id",
             "Login": "/login",
             "Register": "/register",
-            "EditPost": "/edit"
+            "EditPost": ["/edit/:id", "/add"]
         }
     },
     "database": {

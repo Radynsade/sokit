@@ -12,7 +12,7 @@ main {
 
     > section {
         background-color: #{$white};
-        box-shadow: 0 2px 4px #00000016;
+        box-shadow: 0 2px 8px #00000010;
         border-radius: 8px;
         margin: 16px 0;
         overflow: hidden;
@@ -30,7 +30,7 @@ main {
         }
 
         > article {
-            padding: 20px;
+            padding: 16px 20px 20px;
             border: 1px solid #{$gray};
             border-width: 0 1px 1px;
             border-radius: 0 0 8px 8px;
