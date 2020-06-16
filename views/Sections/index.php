@@ -3,7 +3,7 @@
 namespace views\Sections;
 
 use core\Page;
-use libraries\Auth;
+use modules\Auth\Auth;
 
 final class Sections extends Page {
     public function __construct() {

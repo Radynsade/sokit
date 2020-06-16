@@ -3,11 +3,11 @@
 namespace libraries;
 
 class Crypter {
-    private $ciphering;
-    private $IVLength;
-    private $options;
-    private $encryptionIV;
-    private $encryptionKey;
+    protected $ciphering;
+    protected $IVLength;
+    protected $options;
+    protected $encryptionIV;
+    protected $encryptionKey;
 
     public function __construct(
         string $ciphering,

@@ -5,6 +5,7 @@ function getClassName($class) {
     return end($explodedPath);
 }
 
+// Load core components and libraries
 spl_autoload_register(function($class) {
     $className = getClassName($class);
 
@@ -21,3 +22,12 @@ spl_autoload_register(function($class) {
         }
     }
 });
+
+// Load modules
+foreach (new DirectoryIterator('./app/modules/') as $file) {
+    if ($file->isDot()) continue;
+
+    if ($file->isDir()) {
+        require_once "./app/modules/{$file}/include.php";
+    }
+}

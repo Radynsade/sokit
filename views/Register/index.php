@@ -3,7 +3,7 @@
 namespace views\Register;
 
 use core\Page;
-use libraries\Auth;
+use modules\Auth\Auth;
 
 final class Register extends Page {
     public $errorMessage;
@@ -18,32 +18,12 @@ final class Register extends Page {
 
     private function onFormSubmit() : void {
         if (!empty($_POST['completeReg'])) {
-            global $connect;
-            global $loginCrypter;
-
-            $encryptedLogin = $loginCrypter->encrypt($_POST['username']);
-
-            if ($_POST['newPassword'] !== $_POST['repeatPassword']) {
-                $this->errorMessage = 'Пароли должны совпадать!';
+            if (!Auth::createUser($_POST['username'], $_POST['newPassword'], $_POST['repeatPassword'])) {
+                $this->errorMessage = Auth::$error;
                 return;
-            }
+            };
 
-            $sameUsernames = $connect->getFrom('users', ['username'], [
-                'where' => ['username', $encryptedLogin],
-                'orderBy' => ['id', 'DESC']
-            ]);
-
-            if (!empty($sameUsernames)) {
-                $this->errorMessage = 'Пользователь с таким именем уже существует!';
-                return;
-            }
-
-            $connect->addTo('users', [
-                $encryptedLogin => 'username',
-                Auth::hashPassword($_POST['newPassword']) => 'password'
-            ]);
-
-            Auth::signIn($encryptedLogin, '/');
+            Auth::enter($_POST['username'], $_POST['newPassword'], '/');
         }
     }
 }

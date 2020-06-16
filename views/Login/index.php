@@ -3,7 +3,7 @@
 namespace views\Login;
 
 use core\Page;
-use libraries\Auth;
+use modules\Auth\Auth;
 
 final class Login extends Page {
     public $errorMessage;
@@ -19,26 +19,10 @@ final class Login extends Page {
 
     private function onFormSubmit() : void {
         if (!empty($_POST['completeLogin'])) {
-            global $connect;
-            global $loginCrypter;
-
-            $encryptedLogin = $loginCrypter->encrypt($_POST['username']);
-
-            $userData = $connect->getFrom('users', ['username', 'password'], [
-                'where' => ['username', $encryptedLogin]
-            ]);
-
-            if (empty($userData)) {
-                $this->errorMessage = 'Такого пользователя не существует!';
+            if (!Auth::enter($_POST['username'], $_POST['password'], '/')) {
+                $this->errorMessage = Auth::$error;
                 return;
-            }
-
-            if (!Auth::verifyPassword($_POST['password'], $userData['password'])) {
-                $this->errorMessage = 'Неверный пароль!';
-                return;
-            }
-
-            Auth::signIn($encryptedLogin, '/');
+            };
         }
     }
 
