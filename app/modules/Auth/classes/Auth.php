@@ -12,11 +12,18 @@ class Auth {
         return password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
     }
 
-    public static function verifyPassword(string $password, string $hash) : bool {
+    public static function verifyPassword(
+        string $password,
+        string $hash
+    ) : bool {
         return password_verify($password, $hash);
     }
 
-    public static function createUser(string $username, string $newPassword, string $repeatPassword) : bool {
+    public static function createUser(
+        string $username,
+        string $newPassword,
+        string $repeatPassword
+    ) : bool {
         global $connect;
         $encryptedLogin = Auth::$crypter->encrypt($username);
 
@@ -43,7 +50,11 @@ class Auth {
         return true;
     }
 
-    public static function enter(string $username, string $password, string $location) {
+    public static function enter(
+        string $username,
+        string $password,
+        string $location
+    ) : bool {
         global $connect;
         $encryptedLogin = Auth::$crypter->encrypt($username);
 

@@ -22,7 +22,7 @@ label {
             border: 1px solid #{$gray};
             border-radius: 3px;
             display: block;
-            padding: 10px 12px;
+            padding: 8px 10px;
             width: 100%;
             box-shadow: 0 1px 3px #00000012 inset;
 
@@ -44,7 +44,7 @@ input[type=submit] {
     border-radius: 3px;
     color: #{$snow};
     font-weight: #{$roboto-medium};
-    padding: 10px 12px;
+    padding: 8px 10px;
 
     &:hover {
         background: #{$link-light-gradient};

@@ -19,10 +19,10 @@ main {
 
         > header {
             background: #{$link-gradient};
-            padding: 12px 24px;
+            padding: 10px 20px;
 
             h1 {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
                 font-weight: #{$nunito-bold};
                 font-family: #{$nunito};
                 color: #{$snow};
@@ -30,7 +30,7 @@ main {
         }
 
         > article {
-            padding: 24px;
+            padding: 20px;
             border: 1px solid #{$gray};
             border-width: 0 1px 1px;
             border-radius: 0 0 8px 8px;
