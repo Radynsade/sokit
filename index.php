@@ -10,7 +10,7 @@ use core\Builder;
 use libraries\Crypter;
 
 if (!Installer::isDeployed()) {
-    die('Ошибка: Вебсайт не установлен.');
+    die('Ошибка: Вебсайт не развёрнут.');
 }
 
 session_start();

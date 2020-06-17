@@ -17,7 +17,7 @@ final class Installer {
     private static function deploy(array $config) : void {
         Installer::deployModules($config);
 
-        $installFile = fopen('installed', 'w');
+        $installFile = fopen('./generated/installed', 'w');
         fclose($installFile);
         unset($installFile);
 
@@ -25,10 +25,16 @@ final class Installer {
     }
 
     public static function isDeployed() : bool {
-        return file_exists('installed');
+        return file_exists('./generated/installed');
     }
 
     private static function deployModules(array $config) : void {
+        $modulesFile = fopen('./generated/modules', 'w');
+        fclose($modulesFile);
+        unset($modulesFile);
+
+        $modules = array_filter(explode("\n", file_get_contents('./generated/modules')));
+
         foreach (new DirectoryIterator('./app/modules/') as $file) {
             if ($file->isDot()) continue;
 
@@ -36,16 +42,15 @@ final class Installer {
                 require_once "./app/modules/{$file}/install/install.php";
             }
 
-            if (!file_exists("./app/modules/{$file}/install/installed")) {
+            if (!in_array($file->getFileName(), $modules)) {
                 call_user_func(["modules\\{$file}\\Install", 'deploy'], $config);
-                $installFile = fopen("./app/modules/{$file}/install/installed", 'w');
-                fclose($installFile);
-                unset($installFile);
-
+                $modules[] = $file->getFilename();
                 echo "{$file} deployment completed\n";
             } else {
                 echo "{$file} was already deployed\n";
             }
         }
+
+        file_put_contents('./generated/modules', implode("\n", $modules));
     }
 }

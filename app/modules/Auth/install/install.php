@@ -18,4 +18,12 @@ final class Install implements ModuleInstaller {
             $schema
         );
     }
+
+    public static function undeploy(array $config) : void {
+
+    }
+
+    public static function remove(array $config) : void {
+
+    }
 }
