@@ -1,5 +1,7 @@
 <?php
 
+namespace modules\Sections;
+
 class Section {
     public $title;
     public $decription;
@@ -10,14 +12,16 @@ class Section {
     ) {
         $this->title = $title;
         $this->description = $description;
+        $this->author = $_SESSION['user'];
     }
 
     public function upload() {
         global $connect;
 
         $connect->addTo('sections', [
-            $encryptedLogin => 'username',
-            Auth::hashPassword($newPassword) => 'password'
+            $this->title => 'title',
+            $this->description => 'description',
+            $this->author => 'author'
         ]);
     }
 }

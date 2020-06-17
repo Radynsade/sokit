@@ -3,8 +3,9 @@
 namespace views\EditPost;
 
 use core\tools\Tools;
-use modules\Auth\Auth;
 use core\Page;
+use modules\Auth\Auth;
+use modules\Sections\Section;
 
 final class EditPost extends Page {
     public function __construct() {
@@ -24,7 +25,8 @@ final class EditPost extends Page {
 
     private function onFormSubmit() : void {
         Tools::onSubmit('add', function() {
-
+            $section = new Section($_POST['title'], $_POST['description']);
+            $section->upload();
             Tools::redirect('/');
         });
     }

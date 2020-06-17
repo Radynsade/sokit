@@ -56,7 +56,7 @@ class Auth {
         global $connect;
         $encryptedLogin = Auth::$crypter->encrypt($username);
 
-        $userData = $connect->getFrom('users', ['username', 'password'], [
+        $userData = $connect->getFrom('users', ['id', 'username', 'password'], [
             'where' => ['username', $encryptedLogin]
         ]);
 
@@ -70,7 +70,7 @@ class Auth {
             return false;
         }
 
-        $_SESSION['user'] = $username;
+        $_SESSION['user'] = $userData['id'];
         header("Location: {$location}");
         die();
     }
