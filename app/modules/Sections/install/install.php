@@ -3,17 +3,26 @@
 namespace modules\Sections;
 
 use core\interfaces\ModuleInstaller;
+use core\tools\Tools;
 
 final class Install implements ModuleInstaller {
-    public function __construct() {
+    private $schema;
 
+    public function __construct() {
+        global $config;
+
+        $this->schema = Tools::readJSON('./app/modules/Sections/install/schema.json');
     }
 
     public function deploy() : void {
+        global $connect;
 
+        $connect->deploySchema($this->schema);
     }
 
     public function remove() : void {
+        global $connect;
 
+        $connect->removeSchema($this->schema);
     }
 }

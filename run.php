@@ -3,9 +3,16 @@
 require_once 'autoloader.php';
 
 use core\tools\Tools;
+use core\tools\Data;
 use core\Installer;
 
 $config = Tools::readJSON('config.json');
+$connect = new Data(
+    $config['database']['host'],
+    $config['database']['user'],
+    $config['database']['password'],
+    $config['database']['name']
+);
 
 $command = $argv[1];
 $arguments = array_slice($argv, 2);
@@ -16,7 +23,7 @@ if ($command === 'deploy') {
         return;
     }
 
-    Installer::init();
+    Installer::deployModules();
 }
 
 if ($command === 'remove') {
