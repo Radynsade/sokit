@@ -135,7 +135,7 @@ class Data {
             }
         }
 
-        return $result;
+        return count($result) === 1 ? $result[0] : $result;
     }
 
     private static function schemaToSQL(array $schema) : string {

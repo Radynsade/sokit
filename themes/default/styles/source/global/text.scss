@@ -12,6 +12,10 @@ a {
     }
 }
 
+p {
+    line-height: 1.6em;
+}
+
 .error-message {
     color: #{$red-dark};
     margin-bottom: 16px;

@@ -88,6 +88,6 @@ class Auth {
             'where' => ['username', $encryptedLogin]
         ]);
 
-        return $userData[0] ?? [];
+        return $userData ?? [];
     }
 }

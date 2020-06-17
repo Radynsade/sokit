@@ -18,8 +18,8 @@ $sections = $connect->getFrom('sections', []);
                     <section>
                         <div class="title"><?= $section['title'] ?></div>
                         <div class="tools">
-                            <a href="/">Перейти</a>
-                            <a href="/">Редактировать</a>
+                            <a href="/section/<?= $section['id'] ?>">Перейти</a>
+                            <a href="/edit/<?= $section['id'] ?>">Редактировать</a>
                         </div>
                     </section>
                 <?php } ?>
