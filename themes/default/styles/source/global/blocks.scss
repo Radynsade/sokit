@@ -76,6 +76,12 @@ main {
             background-color: #{$snow};
         }
 
+        .title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
         .tools {
             display: flex;
 

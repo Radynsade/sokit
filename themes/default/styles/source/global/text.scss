@@ -16,6 +16,19 @@ a {
     color: #{$red-dark};
     margin-bottom: 16px;
     text-align: center;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.message {
+    text-align: center;
+    margin-bottom: 16px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 ::selection {

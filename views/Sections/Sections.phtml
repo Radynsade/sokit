@@ -12,16 +12,20 @@ $sections = $connect->getFrom('sections', []);
             <a href="/add" class="button">Добавить раздел</a>
             <input type="submit" name="exit" value="Выйти">
         </form>
-        <div class="sections">
-            <?php foreach ($sections as $section) { ?>
-                <section>
-                    <div class="title"><?= $section['title'] ?></div>
-                    <div class="tools">
-                        <a href="/">Перейти</a>
-                        <a href="/">Редактировать</a>
-                    </div>
-                </section>
-            <?php } ?>
-        </div>
+        <?php if (!empty($sections)) { ?>
+            <div class="sections">
+                <?php foreach ($sections as $section) { ?>
+                    <section>
+                        <div class="title"><?= $section['title'] ?></div>
+                        <div class="tools">
+                            <a href="/">Перейти</a>
+                            <a href="/">Редактировать</a>
+                        </div>
+                    </section>
+                <?php } ?>
+            </div>
+        <?php } else { ?>
+            <div class="message">Пока что нет ни одного раздела</div>
+        <?php } ?>
     </article>
 </section>

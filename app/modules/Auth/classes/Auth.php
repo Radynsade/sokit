@@ -84,9 +84,10 @@ class Auth {
     private static function getUserData(string $username) : array {
         global $connect;
         $encryptedLogin = Auth::$crypter->encrypt($username);
-
-        return $connect->getFrom('users', ['id', 'username', 'password'], [
+        $userData = $connect->getFrom('users', ['id', 'username', 'password'], [
             'where' => ['username', $encryptedLogin]
-        ])[0];
+        ]);
+
+        return $userData[0] ?? [];
     }
 }
