@@ -2,8 +2,8 @@
 
 namespace views\EditPost;
 
+use core\tools\Tools;
 use core\Page;
-use modules\Auth\Auth;
 
 final class EditPost extends Page {
     public function __construct() {
@@ -23,14 +23,8 @@ final class EditPost extends Page {
     }
 
     private function onFormSubmit() : void {
-        if (!empty($_POST['addPost'])) {
-            echo 1;
-            header('Location: /edit');
-            die();
-        }
-
-        if (!empty($_POST['exit'])) {
-            Auth::exit('/');
-        }
+        Tools::onSubmit('add', function() {
+            Tools::redirect('/');
+        });
     }
 }

@@ -34,3 +34,7 @@ if ($command === 'remove') {
 
     Installer::removeModules();
 }
+
+if ($command === 'install') {
+    Installer::install();
+}

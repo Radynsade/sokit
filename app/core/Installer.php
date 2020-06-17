@@ -5,32 +5,46 @@ namespace core;
 use core\tools\Data;
 use DirectoryIterator;
 
-const MODULES_FILE = './generated/modules';
 const INSTALLED_FILE = './generated/installed';
+const MODULES_FILE = './generated/modules';
 const MODULES_DIR = './app/modules/';
 
 final class Installer {
-    public static function init() : void {
-        if (!Installer::isDeployed()) {
-            Installer::deploy();
+    public static function install() : void {
+        if (!file_exists(INSTALLED_FILE)) {
+            global $config;
+
+            Installer::createDatabase(
+                $config['database']['host'],
+                $config['database']['user'],
+                $config['database']['password'],
+                $config['database']['name']
+            );
+
+            Installer::deployModules();
+
+            $installFile = fopen(INSTALLED_FILE, 'w');
+            fclose($installFile);
+            unset($installFile);
+            echo "Installation completed\n";
         } else {
-            echo "Website is already deployed\n";
+            echo "Website is already installed\n";
         }
     }
 
-    private static function deploy() : void {
-        global $config;
-        Installer::deployModules();
+    public static function createDatabase(
+        string $host,
+        string $user,
+        string $password,
+        string $name
+    ) : void {
+        $connect = new Data($host, $user, $password);
+        $connect->setDatabase($name);
 
-        $installFile = fopen(INSTALLED_FILE, 'w');
-        fclose($installFile);
-        unset($installFile);
+        $connect->close();
+        unset($connect);
 
-        echo "Deployment completed\n";
-    }
-
-    public static function isDeployed() : bool {
-        return file_exists(INSTALLED_FILE);
+        echo 'Database created';
     }
 
     public static function removeModules(array $modulesList = []) : void {

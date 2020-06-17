@@ -1,27 +1,21 @@
 <section>
     <header>
-        <h1>Список разделов</h1>
+        <h1><?= !empty($GLOBALS['url']['id']) ? 'Редактировать раздел' : 'Добавить раздел' ?></h1>
     </header>
     <article>
-        <form action="" method="POST" class="toolbar">
-            <input type="submit" name="addPost" value="Добавить раздел">
-            <input type="submit" name="exit" value="Выйти">
+        <form action="" method="POST">
+            <label class="field">
+                <div>Заголовок</div>
+                <input type="text" name="title" maxlength="100" required>
+            </label>
+            <label class="field">
+                <div>Описание</div>
+                <textarea name="description" rows="8"></textarea>
+            </label>
+            <div class="toolbar">
+                <input type="submit" name="add" value="Добавить">
+                <a href="/" class="button">Отмена</a>
+            </div>
         </form>
-        <div class="sections">
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-        </div>
     </article>
 </section>

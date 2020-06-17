@@ -2,6 +2,7 @@
 
 namespace views\Sections;
 
+use core\tools\Tools;
 use core\Page;
 use modules\Auth\Auth;
 
@@ -23,14 +24,8 @@ final class Sections extends Page {
     }
 
     private function onFormSubmit() : void {
-        if (!empty($_POST['addPost'])) {
-            echo 1;
-            header('Location: /add');
-            die();
-        }
-
-        if (!empty($_POST['exit'])) {
+        Tools::onSubmit('exit', function() {
             Auth::exit('/');
-        }
+        });
     }
 }

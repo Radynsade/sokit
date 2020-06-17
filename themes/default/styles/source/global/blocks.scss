@@ -53,6 +53,11 @@ main {
     justify-content: space-between;
     flex-direction: row;
     margin-bottom: 16px;
+    width: 100%;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .sections {

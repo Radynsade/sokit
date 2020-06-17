@@ -4,14 +4,8 @@ require_once './autoloader.php';
 
 use core\tools\Data;
 use core\tools\Tools;
-use core\Installer;
 use core\Router;
 use core\Builder;
-use libraries\Crypter;
-
-if (!Installer::isDeployed()) {
-    die('Ошибка: Вебсайт не развёрнут.');
-}
 
 session_start();
 
@@ -29,6 +23,8 @@ $connect = new Data(
 // Create router
 $router = new Router($config['router']);
 $router->readPath($_SERVER['REQUEST_URI']);
+$GLOBALS['url'] = $router->result['url'] ?? [];
+$GLOBALS['view'] = $router->result['view'] ?? '';
 
 // Render page
 Builder::render($router->result['view'], $config['main']['theme']);
