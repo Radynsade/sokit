@@ -66,11 +66,11 @@ class Data {
             foreach ($columns as $column) {
                 $columnsList .= "`{$column}`, ";
             }
+            $columnsList = substr($columnsList, 0, -2);
         } else {
             $columnsList = '*';
         }
 
-        $columnsList = substr($columnsList, 0, -2);
 
         return Data::fetchResult(
             $this->query("SELECT {$columnsList} from `{$tableName}`" . $where . $orderBy . ';')
@@ -124,9 +124,14 @@ class Data {
 
         if ($queryResult->num_rows > 0) {
             while ($row = $queryResult->fetch_assoc()) {
+                $data = [];
+
                 foreach ($row as $key => $value) {
-                    $result[$key] = $value;
+                    $data[$key] = $value;
                 }
+
+                array_push($result, $data);
+                unset($data);
             }
         }
 

@@ -17,9 +17,8 @@ final class Sections extends Page {
     }
 
     private function beforeLoad() : void {
-        if (empty($_SESSION['user'])) {
-            header('Location: /login');
-            die();
+        if (!Auth::isAuthorized()) {
+            Tools::redirect('/login');
         };
     }
 

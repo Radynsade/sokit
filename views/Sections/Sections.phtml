@@ -1,3 +1,16 @@
+<?php
+global $connect;
+
+$sections = $connect->getFrom('sections', []);
+
+// var_dump($sections);
+// echo "<br />";
+
+foreach ($sections as $section) {
+    var_dump($section);
+    echo "<br />";
+}
+?>
 <section>
     <header>
         <h1>Список разделов</h1>
@@ -8,55 +21,15 @@
             <input type="submit" name="exit" value="Выйти">
         </form>
         <div class="sections">
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
-            <section>
-                <div class="title">Section One</div>
-                <div class="tools">
-                    <a href="/">Перейти</a>
-                    <a href="/">Редактировать</a>
-                </div>
-            </section>
+            <?php foreach ($sections as $section) { ?>
+                <section>
+                    <div class="title"><?= $section['title'] ?></div>
+                    <div class="tools">
+                        <a href="/">Перейти</a>
+                        <a href="/">Редактировать</a>
+                    </div>
+                </section>
+            <?php } ?>
         </div>
     </article>
 </section>
