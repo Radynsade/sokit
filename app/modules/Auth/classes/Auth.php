@@ -2,6 +2,8 @@
 
 namespace modules\Auth;
 
+use core\tools\Tools;
+
 class Auth {
     public static $error;
     public static $crypter;
@@ -53,12 +55,7 @@ class Auth {
         string $password,
         string $location
     ) : bool {
-        global $connect;
-        $encryptedLogin = Auth::$crypter->encrypt($username);
-
-        $userData = $connect->getFrom('users', ['id', 'username', 'password'], [
-            'where' => ['username', $encryptedLogin]
-        ]);
+        $userData = Auth::getUserData($username);
 
         if (empty($userData)) {
             Auth::$error = 'Такого пользователя не существует!';
@@ -71,8 +68,7 @@ class Auth {
         }
 
         $_SESSION['user'] = $userData['id'];
-        header("Location: {$location}");
-        die();
+        Tools::redirect($location);
     }
 
     public static function isAuthorized() : bool {
@@ -82,7 +78,15 @@ class Auth {
     public static function exit(string $location) : void {
         unset($_SESSION['user']);
         session_destroy();
-        header("Location: {$location}");
-        die();
+        Tools::redirect($location);
+    }
+
+    private static function getUserData(string $username) : array {
+        global $connect;
+        $encryptedLogin = Auth::$crypter->encrypt($username);
+
+        return $connect->getFrom('users', ['id', 'username', 'password'], [
+            'where' => ['username', $encryptedLogin]
+        ])[0];
     }
 }

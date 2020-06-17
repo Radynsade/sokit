@@ -1,3 +1,7 @@
+:root {
+    --main-content-width: 640px;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -12,7 +16,7 @@ main {
     align-items: center;
     align-content: center;
     margin: 0 auto;
-    width: 800px;
+    width: var(--main-content-width);
 
     > section {
         background-color: #{$white};
