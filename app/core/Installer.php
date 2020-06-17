@@ -29,11 +29,11 @@ final class Installer {
     }
 
     private static function deployModules(array $config) : void {
-        $modulesFile = fopen('./generated/modules', 'w');
+        $modulesFile = fopen('./generated/modules', 'a+');
         fclose($modulesFile);
         unset($modulesFile);
 
-        $modules = array_filter(explode("\n", file_get_contents('./generated/modules')));
+        $modules = explode("\n", file_get_contents('./generated/modules'));
 
         foreach (new DirectoryIterator('./app/modules/') as $file) {
             if ($file->isDot()) continue;
