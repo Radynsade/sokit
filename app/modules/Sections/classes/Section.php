@@ -32,4 +32,10 @@ class Section {
             'where' => ['id', $id]
         ])[0];
     }
+
+    public static function getAll() : array {
+        global $connect;
+
+        return $connect->getFrom('sections', []);
+    }
 }
