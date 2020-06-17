@@ -8,8 +8,12 @@ use core\tools\Tools;
 
 final class Install implements ModuleInstaller {
     private $connect;
+    private $schema;
 
-    public function __construct(array $config) {
+    public function __construct() {
+        global $config;
+
+        $this->schema = Tools::readJSON('./app/modules/Auth/install/schema.json');
         $this->connect = new Data(
             $config['database']['host'],
             $config['database']['user'],
@@ -19,11 +23,10 @@ final class Install implements ModuleInstaller {
     }
 
     public function deploy() : void {
-        $schema = Tools::readJSON('./app/modules/Auth/install/schema.json');
-        $this->connect->deploySchema($schema);
+        $this->connect->deploySchema($this->schema);
     }
 
     public function remove() : void {
-
+        $this->connect->removeSchema($this->schema);
     }
 }

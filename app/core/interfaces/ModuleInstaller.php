@@ -3,7 +3,7 @@
 namespace core\interfaces;
 
 interface ModuleInstaller {
-    public function __construct(array $config);
+    public function __construct();
 
     public function deploy() : void;
 
