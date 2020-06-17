@@ -9,8 +9,6 @@ final class Install implements ModuleInstaller {
     private $schema;
 
     public function __construct() {
-        global $config;
-
         $this->schema = Tools::readJSON('./app/modules/Auth/install/schema.json');
     }
 
