@@ -38,3 +38,12 @@ if ($command === 'remove') {
 if ($command === 'install') {
     Installer::install();
 }
+
+if ($command === 'redeploy') {
+    if (!empty($arguments)) {
+        Installer::redeployModules($arguments);
+        return;
+    }
+
+    Installer::redeployModules();
+}

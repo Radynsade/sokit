@@ -2,8 +2,6 @@
 
 namespace modules\Auth;
 
-use core\tools\Data;
-
 class Auth {
     public static $error;
     public static $crypter;
@@ -75,6 +73,10 @@ class Auth {
         $_SESSION['user'] = $username;
         header("Location: {$location}");
         die();
+    }
+
+    public static function isAuthorized() : bool {
+        return !empty($_SESSION['user']) ? true : false;
     }
 
     public static function exit(string $location) : void {

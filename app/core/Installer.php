@@ -47,6 +47,11 @@ final class Installer {
         echo 'Database created';
     }
 
+    public static function redeployModules(array $modulesList = []) : void {
+        Installer::removeModules($modulesList);
+        Installer::deployModules($modulesList);
+    }
+
     public static function removeModules(array $modulesList = []) : void {
         global $config;
         $modules = Installer::readModulesFile(MODULES_FILE);

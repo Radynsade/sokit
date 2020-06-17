@@ -3,6 +3,7 @@
 namespace views\EditPost;
 
 use core\tools\Tools;
+use modules\Auth\Auth;
 use core\Page;
 
 final class EditPost extends Page {
@@ -16,14 +17,14 @@ final class EditPost extends Page {
     }
 
     private function beforeLoad() : void {
-        if (empty($_SESSION['user'])) {
-            header('Location: /login');
-            die();
+        if (!Auth::isAuthorized()) {
+            Tools::redirect('/login');
         };
     }
 
     private function onFormSubmit() : void {
         Tools::onSubmit('add', function() {
+
             Tools::redirect('/');
         });
     }

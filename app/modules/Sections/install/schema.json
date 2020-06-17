@@ -19,7 +19,7 @@
         "parent": {
             "type": "int",
             "length": 8,
-            "null": false
+            "null": true
         },
         "author": {
             "type": "int",
