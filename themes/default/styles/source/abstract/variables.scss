@@ -36,8 +36,11 @@ $link-blue-dark: #3d677c;
 $link-blue-dim: #30404c;
 $red: #ec4d4d;
 $red-dark: #b82e2e;
+$brown: #7d5d3b;
 
 // Gradients
 $link-light-gradient: linear-gradient(#3f7c9b, #3d677c);
 $link-gradient: linear-gradient(#3d677c, #1C4356);
 $link-dark-gradient: linear-gradient(#15303d, #1C4356);
+
+$brown-gradient: linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%);

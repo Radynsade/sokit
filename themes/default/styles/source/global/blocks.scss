@@ -20,6 +20,11 @@ main {
         > header {
             background: #{$link-gradient};
             padding: 10px 20px;
+            text-shadow:0px 1px 0px #00000088;
+            box-shadow:inset 0px 1px 0px 0px #ffffff40;
+            border:1px solid #{$link-blue-dark};
+            border-width: 1px 1px 0;
+            border-radius: 8px 8px 0 0;
 
             h1 {
                 font-size: 1.3rem;

@@ -42,9 +42,12 @@ input[type=button],
 input[type=submit] {
     background: #{$link-gradient};
     border-radius: 3px;
+    border:1px solid #{$link-blue-dark};
+    box-shadow:inset 0px 1px 0px 0px #ffffff40;
     color: #{$snow};
     font-weight: #{$roboto-medium};
     padding: 8px 10px;
+    text-shadow:0px 1px 0px #00000088;
 
     &:hover {
         background: #{$link-light-gradient};
