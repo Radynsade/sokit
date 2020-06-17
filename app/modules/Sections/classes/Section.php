@@ -24,4 +24,12 @@ class Section {
             $this->author => 'author'
         ]);
     }
+
+    public static function get(int $id) : array {
+        global $connect;
+
+        return $connect->getFrom('sections', [], [
+            'where' => ['id', $id]
+        ])[0];
+    }
 }

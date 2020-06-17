@@ -1,0 +1,12 @@
+<section>
+    <header>
+        <h1><?= $this->section['title'] ?></h1>
+    </header>
+    <article>
+        <form action="" method="POST" class="toolbar">
+            <a href="/edit/<?= $this->section['id'] ?>" class="button">Редактировать</a>
+            <a href="/" class="button">Назад</a>
+        </form>
+        <p><?= $this->section['description'] ?></p>
+    </article>
+</section>

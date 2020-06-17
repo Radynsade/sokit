@@ -6,7 +6,7 @@
         "404": "NotFound",
         "routes": {
             "Sections": "",
-            "Section": "/section/:id",
+            "SectionReview": "/section/:id",
             "Login": "/login",
             "Register": "/register",
             "EditPost": ["/edit/:id", "/add"]
