@@ -1,9 +1,5 @@
 #Register {
-    display: flex;
     width: initial;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
 
     @include after-mobile {
         section {

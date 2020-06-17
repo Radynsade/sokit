@@ -10,6 +10,7 @@ spl_autoload_register(function($class) {
     $className = getClassName($class);
 
     $directories = [
+        './app/core/interfaces/',
         './app/core/tools/',
         './app/core/',
         './app/libraries/'

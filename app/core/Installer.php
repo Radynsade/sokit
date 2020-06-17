@@ -3,51 +3,49 @@
 namespace core;
 
 use core\tools\Data;
+use DirectoryIterator;
 
 final class Installer {
     public static function init(array $config) : void {
-        if (!Installer::isInstalled()) {
+        if (!Installer::isDeployed()) {
             Installer::deploy($config);
+        } else {
+            echo "Website is already deployed\n";
         }
     }
 
     private static function deploy(array $config) : void {
-        Installer::deployDatabase(
-            $config['database']['host'],
-            $config['database']['user'],
-            $config['database']['password'],
-            $config['database']['name'],
-            $config['database']['tables']
-        );
+        Installer::deployModules($config);
 
         $installFile = fopen('installed', 'w');
         fclose($installFile);
         unset($installFile);
+
+        echo "Deployment completed\n";
     }
 
-    private static function isInstalled() : bool {
+    public static function isDeployed() : bool {
         return file_exists('installed');
     }
 
-    private static function deployModules() : void {
+    private static function deployModules(array $config) : void {
+        foreach (new DirectoryIterator('./app/modules/') as $file) {
+            if ($file->isDot()) continue;
 
-    }
+            if ($file->isDir()) {
+                require_once "./app/modules/{$file}/install/install.php";
+            }
 
-    private static function deployDatabase(
-        string $host,
-        string $user,
-        string $password,
-        string $name,
-        array $tables
-    ) : void {
-        $connect = new Data($host, $user, $password);
-        $connect->setDatabase($name);
+            if (!file_exists("./app/modules/{$file}/install/installed")) {
+                call_user_func(["modules\\{$file}\\Install", 'deploy'], $config);
+                $installFile = fopen("./app/modules/{$file}/install/installed", 'w');
+                fclose($installFile);
+                unset($installFile);
 
-        foreach ($tables as $name => $schema) {
-            $connect->createTable($name, $schema);
+                echo "{$file} deployment completed\n";
+            } else {
+                echo "{$file} was already deployed\n";
+            }
         }
-
-        $connect->close();
-        unset($connect);
     }
 }

@@ -1,20 +1,22 @@
 <?php
 
-require './autoloader.php';
+require_once './autoloader.php';
 
 use core\tools\Data;
+use core\tools\Tools;
 use core\Installer;
 use core\Router;
 use core\Builder;
 use libraries\Crypter;
 
+if (!Installer::isDeployed()) {
+    die('Ошибка: Вебсайт не установлен.');
+}
+
 session_start();
 
 // Read config file
-$config = json_decode(file_get_contents('config.json'), true);
-
-// Check if website is deployed and deploy it using configuration if not
-Installer::init($config);
+$config = Tools::readJSON('config.json');
 
 // Create global connection
 $connect = new Data(
@@ -23,9 +25,6 @@ $connect = new Data(
     $config['database']['password'],
     $config['database']['name'],
 );
-
-// Create encrypter for user login
-$loginCrypter = new Crypter('AES-128-CBC','8259561259121120','Sokit2Key');
 
 // Create router
 $router = new Router($config['router']);

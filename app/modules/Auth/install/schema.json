@@ -1,0 +1,21 @@
+{
+    "users": {
+        "id": {
+            "type": "int",
+            "length": 8,
+            "auto": true,
+            "null": false,
+            "primary": true
+        },
+        "username": {
+            "type": "varchar",
+            "length": 255,
+            "null": false
+        },
+        "password": {
+            "type": "varchar",
+            "length": 255,
+            "null": false
+        }
+    }
+}

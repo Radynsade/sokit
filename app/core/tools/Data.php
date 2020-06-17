@@ -103,6 +103,24 @@ class Data {
         $this->query("CREATE TABLE IF NOT EXISTS `{$name}` " . Data::schemaToSQL($schema) . " ENGINE = {$engine};");
     }
 
+    public static function deploySchema(
+        string $host,
+        string $user,
+        string $password,
+        string $name,
+        array $tables
+    ) : void {
+        $connect = new Data($host, $user, $password);
+        $connect->setDatabase($name);
+
+        foreach ($tables as $name => $schema) {
+            $connect->createTable($name, $schema);
+        }
+
+        $connect->close();
+        unset($connect);
+    }
+
     private static function fetchResult(object $queryResult) : array {
         $result = [];
 

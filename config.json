@@ -16,55 +16,6 @@
         "host": "localhost",
         "user": "root",
         "password": "",
-        "name": "sokit",
-        "tables": {
-            "users": {
-                "id": {
-                    "type": "int",
-                    "length": 8,
-                    "auto": true,
-                    "null": false,
-                    "primary": true
-                },
-                "username": {
-                    "type": "varchar",
-                    "length": 255,
-                    "null": false
-                },
-                "password": {
-                    "type": "varchar",
-                    "length": 255,
-                    "null": false
-                }
-            },
-            "sections": {
-                "id": {
-                    "type": "int",
-                    "length": 8,
-                    "auto": true,
-                    "null": false,
-                    "primary": true
-                },
-                "title": {
-                    "type": "varchar",
-                    "length": 256,
-                    "null": false
-                },
-                "description": {
-                    "type": "text",
-                    "null": false
-                },
-                "parent": {
-                    "type": "int",
-                    "length": 8,
-                    "null": false
-                },
-                "author": {
-                    "type": "int",
-                    "length": 8,
-                    "null": false
-                }
-            }
-        }
+        "name": "sokit"
     }
 }
