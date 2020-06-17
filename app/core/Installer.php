@@ -40,14 +40,17 @@ final class Installer {
 
             if ($file->isDir()) {
                 require_once "./app/modules/{$file}/install/install.php";
-            }
 
-            if (!in_array($file->getFileName(), $modules)) {
-                call_user_func(["modules\\{$file}\\Install", 'deploy'], $config);
-                $modules[] = $file->getFilename();
-                echo "{$file} deployment completed\n";
-            } else {
-                echo "{$file} was already deployed\n";
+                $class = "modules\\{$file}\\Install";
+                $installScript = new $class($config);
+
+                if (!in_array($file->getFileName(), $modules)) {
+                    $installScript->deploy();
+                    $modules[] = $file->getFilename();
+                    echo "{$file} deployment completed\n";
+                } else {
+                    echo "{$file} was already deployed\n";
+                }
             }
         }
 

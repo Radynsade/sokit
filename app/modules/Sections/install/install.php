@@ -2,8 +2,18 @@
 
 namespace modules\Sections;
 
-class Install {
-    public static function deploy(array $config) {
+use core\interfaces\ModuleInstaller;
+
+final class Install implements ModuleInstaller {
+    public function __construct(array $config) {
+
+    }
+
+    public function deploy() : void {
+
+    }
+
+    public function remove() : void {
 
     }
 }

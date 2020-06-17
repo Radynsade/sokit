@@ -3,5 +3,9 @@
 namespace core\interfaces;
 
 interface ModuleInstaller {
-    public static function deploy(array $config) : void;
+    public function __construct(array $config);
+
+    public function deploy() : void;
+
+    public function remove() : void;
 }

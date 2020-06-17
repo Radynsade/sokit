@@ -103,22 +103,20 @@ class Data {
         $this->query("CREATE TABLE IF NOT EXISTS `{$name}` " . Data::schemaToSQL($schema) . " ENGINE = {$engine};");
     }
 
-    public static function deploySchema(
-        string $host,
-        string $user,
-        string $password,
-        string $name,
-        array $tables
-    ) : void {
-        $connect = new Data($host, $user, $password);
-        $connect->setDatabase($name);
+    public function removeTable(string $table) : void {
+        $this->query("DROP TABLE {$table};");
+    }
 
+    public function deploySchema(array $tables) : void {
         foreach ($tables as $name => $schema) {
-            $connect->createTable($name, $schema);
+            $this->createTable($name, $schema);
         }
+    }
 
-        $connect->close();
-        unset($connect);
+    public function removeSchema(array $tables) : void {
+        foreach ($tables as $name => $schema) {
+            $this->removeTable($name);
+        }
     }
 
     private static function fetchResult(object $queryResult) : array {

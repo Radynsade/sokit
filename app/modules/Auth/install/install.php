@@ -7,23 +7,23 @@ use core\tools\Data;
 use core\tools\Tools;
 
 final class Install implements ModuleInstaller {
-    public static function deploy(array $config) : void {
-        $schema = Tools::readJSON('./app/modules/Auth/install/schema.json');
+    private $connect;
 
-        Data::deploySchema(
+    public function __construct(array $config) {
+        $this->connect = new Data(
             $config['database']['host'],
             $config['database']['user'],
             $config['database']['password'],
-            $config['database']['name'],
-            $schema
+            $config['database']['name']
         );
     }
 
-    public static function undeploy(array $config) : void {
-
+    public function deploy() : void {
+        $schema = Tools::readJSON('./app/modules/Auth/install/schema.json');
+        $this->connect->deploySchema($schema);
     }
 
-    public static function remove(array $config) : void {
+    public function remove() : void {
 
     }
 }
