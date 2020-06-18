@@ -8,13 +8,21 @@ use modules\Auth\Auth;
 use modules\Sections\Section;
 
 final class EditPost extends Page {
+    public $section;
+
     public function __construct() {
         $this->beforeLoad();
         $this->title = 'Разделы';
         $this->description = 'Страница разделов пользователя';
         $this->keywords = 'страница, разделы, разделов, пользователь, профиль, пользователя';
         $this->onFormSubmit();
-        $this->setContent('EditForm.phtml');
+
+        if (empty($GLOBALS['url']['id'])) {
+            $this->setContent('AddForm.phtml');
+        } else {
+            $this->section = Section::get($GLOBALS['url']['id']);
+            $this->setContent('EditForm.phtml');
+        }
     }
 
     private function beforeLoad() : void {
@@ -27,6 +35,14 @@ final class EditPost extends Page {
         Tools::onSubmit('add', function() {
             $section = new Section($_POST['title'], $_POST['description']);
             $section->upload();
+            unset($section);
+            Tools::redirect('/');
+        });
+
+        Tools::onSubmit('edit', function() {
+            $section = new Section($_POST['title'], $_POST['description']);
+            $section->update($GLOBALS['url']['id']);
+            unset($section);
             Tools::redirect('/');
         });
     }

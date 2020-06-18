@@ -1,19 +1,19 @@
 <section>
     <header>
-        <h1>Редактировать раздел</h1>
+        <h1>Добавить раздел</h1>
     </header>
     <article>
         <form action="" method="POST">
             <label class="field">
                 <div>Заголовок</div>
-                <input type="text" name="title" maxlength="100" autocomplete="off" value="<?= $this->section['title'] ?>" required>
+                <input type="text" name="title" maxlength="100" autocomplete="off" required>
             </label>
             <label class="field">
                 <div>Описание</div>
-                <textarea name="description" rows="8"><?= $this->section['description'] ?></textarea>
+                <textarea name="description" rows="8"></textarea>
             </label>
             <div class="toolbar">
-                <input type="submit" name="edit" value="Изменить">
+                <input type="submit" name="add" value="Добавить">
                 <a href="/" class="button">Отмена</a>
             </div>
         </form>

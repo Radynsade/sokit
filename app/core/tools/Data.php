@@ -85,6 +85,7 @@ class Data {
         $fields = '';
 
         foreach ($valuesToFields as $value => $field) {
+            $value = $this->connect->real_escape_string($value);
             $values .= "'{$value}', ";
             $fields .= "`{$field}`, ";
         }
@@ -93,6 +94,26 @@ class Data {
         $fields = substr($fields, 0, -2);
 
         return $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
+    }
+
+    public function update(
+        string $tableName,
+        array $valuesToFields,
+        string $conditionField,
+        $conditionValue
+    ) : bool {
+        $newValues = '';
+
+        foreach ($valuesToFields as $value => $field) {
+            $value = $this->connect->real_escape_string($value);
+            $newValues .= "`{$field}`='$value', ";
+        }
+
+        $newValues = substr($newValues, 0, -2);
+        $sql = "UPDATE `{$tableName}` SET {$newValues} WHERE `{$conditionField}`='{$conditionValue}';";
+        var_dump($sql);
+
+        return $this->query($sql);
     }
 
     public function createTable(
