@@ -33,8 +33,16 @@ final class SQLB {
     /*
         Conditions & additional
     */
-    public function where() : object {
+    public function where(array $fieldsToValues) : object {
+        $conditions = '';
 
+        foreach ($fieldsToValues as $field => $value) {
+            $conditions .= "`{$field}` = '{$value}' AND";
+        }
+
+        $conditions = substr($conditions, 0, -4);
+
+        $this->where = "WHERE {$conditions}";
         return $this;
     }
 
@@ -42,19 +50,15 @@ final class SQLB {
         Actions
     */
     public function insert() : object {
-        return $this->setAction(function() {
-            $this->action = 'insert';
-            return $this;
-        });
+        $this->action = 'insert';
+        return $this;
     }
 
     public function get() : object {
-        return $this->setAction(function() {
-            $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
-            $this->action = 'get';
-            $this->sql = "SELECT {$values} FROM {$this->table};";
-            return $this;
-        });
+        $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
+        $this->action = 'get';
+        $this->sql = "SELECT {$values} FROM {$this->table} {$this->where};";
+        return $this;
     }
 
     /*
@@ -62,13 +66,5 @@ final class SQLB {
     */
     private function joinValues(array $values) : string {
         return '`' . implode('`, `', $this->values) . '`';
-    }
-
-    private function setAction(callable $function) : object {
-        if (empty($this->action)) {
-            return $function();
-        }
-
-        die("SQLB: Cannot set '{$this->action}' action, another action is already declared. (" . basename($_SERVER["SCRIPT_FILENAME"]) . ')');
     }
 }

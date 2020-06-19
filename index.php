@@ -15,12 +15,14 @@ $GLOBALS['url'] = $router->result['url'] ?? [];
 $GLOBALS['view'] = $router->result['view'] ?? '';
 
 $query = SQLB::write('users')
+    ->where([
+        'id' => 1
+    ])
     ->data(['username', 'email', 'password'])
     ->get()
-    ->insert()
     ->sql;
 
-var_dump($query);
+var_dump($connect->query($query));
 
 // Render page
 Builder::render($router->result['view'], $config['main']['theme']);
