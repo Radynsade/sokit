@@ -16,6 +16,15 @@
             "type": "varchar",
             "length": 255,
             "null": false
+        },
+        "email": {
+            "type": "varchar",
+            "length": 255,
+            "null": true
+        },
+        "last_visit": {
+            "type": "datetime",
+            "null": false
         }
     }
 }

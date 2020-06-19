@@ -40,6 +40,9 @@ main {
                 font-weight: #{$nunito-bold};
                 font-family: #{$nunito};
                 color: #{$snow};
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
         }
 
