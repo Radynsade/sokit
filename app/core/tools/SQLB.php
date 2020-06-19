@@ -69,6 +69,6 @@ final class SQLB {
             return $function();
         }
 
-        die("SQLB: Cannot set '{$this->action}' action, another action is already declared.");
+        die("SQLB: Cannot set '{$this->action}' action, another action is already declared. (" . basename($_SERVER["SCRIPT_FILENAME"]) . ')');
     }
 }
