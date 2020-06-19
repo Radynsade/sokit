@@ -1,21 +1,11 @@
 <?php
 
-require_once 'autoloader.php';
+require_once './predefined.php';
 
-use core\tools\Tools;
-use core\tools\Data;
 use core\Installer;
 
-$config = Tools::readJSON('config.json');
-$connect = new Data(
-    $config['database']['host'],
-    $config['database']['user'],
-    $config['database']['password'],
-    $config['database']['name']
-);
-
-$command = $argv[1];
-$arguments = array_slice($argv, 2);
+$command = $argv[1]; // Get command
+$arguments = array_slice($argv, 2); // Get arguments
 
 if ($command === 'deploy') {
     if (!empty($arguments)) {
