@@ -15,7 +15,7 @@ final class SQLB {
 
     // Constructor
     public function __construct(string $tableName) {
-        $this->table = $tableName;
+        $this->table = '`' . $tableName . '`';
     }
 
     // Factory
@@ -46,16 +46,13 @@ final class SQLB {
     public function get() : string {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
 
-        return $values;
+        return "SELECT {$values} FROM {$this->table};";
     }
 
     /*
         Internal
     */
     private function joinValues(array $values) : string {
-        $joined = implode('\', \'', $this->values);
-        $joined = "'{$joined}'";
-
-        return $joined;
+        return '`' . implode('`,`', $this->values) . '`';
     }
 }
