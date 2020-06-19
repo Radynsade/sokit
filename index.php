@@ -14,7 +14,11 @@ $router->readPath($_SERVER['REQUEST_URI']);
 $GLOBALS['url'] = $router->result['url'] ?? [];
 $GLOBALS['view'] = $router->result['view'] ?? '';
 
-$query = SQLB::write('users')->data(['username', 'email', 'password'])->get();
+$query = SQLB::write('users')
+    ->data(['username', 'email', 'password'])
+    ->get()
+    ->sql;
+
 var_dump($query);
 
 // Render page

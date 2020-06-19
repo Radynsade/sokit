@@ -12,6 +12,7 @@ final class SQLB {
     private $values;
     private $order;
     private $where = [];
+    public $sql;
 
     // Constructor
     public function __construct(string $tableName) {
@@ -43,16 +44,17 @@ final class SQLB {
 
     }
 
-    public function get() : string {
+    public function get() : object {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
 
-        return "SELECT {$values} FROM {$this->table};";
+        $this->sql = "SELECT {$values} FROM {$this->table};";
+        return $this;
     }
 
     /*
         Internal
     */
     private function joinValues(array $values) : string {
-        return '`' . implode('`,`', $this->values) . '`';
+        return '`' . implode('`, `', $this->values) . '`';
     }
 }
