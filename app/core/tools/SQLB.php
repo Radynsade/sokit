@@ -33,22 +33,28 @@ final class SQLB {
     /*
         Conditions & additional
     */
-    public function where() {
+    public function where() : object {
 
+        return $this;
     }
 
     /*
         Actions
     */
-    public function insert() : string {
-
+    public function insert() : object {
+        return $this->setAction(function() {
+            $this->action = 'insert';
+            return $this;
+        });
     }
 
     public function get() : object {
-        $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
-
-        $this->sql = "SELECT {$values} FROM {$this->table};";
-        return $this;
+        return $this->setAction(function() {
+            $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
+            $this->action = 'get';
+            $this->sql = "SELECT {$values} FROM {$this->table};";
+            return $this;
+        });
     }
 
     /*
@@ -56,5 +62,13 @@ final class SQLB {
     */
     private function joinValues(array $values) : string {
         return '`' . implode('`, `', $this->values) . '`';
+    }
+
+    private function setAction(callable $function) : object {
+        if (empty($this->action)) {
+            return $function();
+        }
+
+        die("SQLB: Cannot set '{$this->action}' action, another action is already declared.");
     }
 }

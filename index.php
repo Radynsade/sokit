@@ -17,6 +17,7 @@ $GLOBALS['view'] = $router->result['view'] ?? '';
 $query = SQLB::write('users')
     ->data(['username', 'email', 'password'])
     ->get()
+    ->insert()
     ->sql;
 
 var_dump($query);
