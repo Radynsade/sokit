@@ -77,26 +77,6 @@ class Data {
         );
     }
 
-    // Backup
-    // public function addTo(
-    //     string $tableName,
-    //     array $valuesToFields
-    // ) : bool {
-    //     $values = '';
-    //     $fields = '';
-
-    //     foreach ($valuesToFields as $value => $field) {
-    //         $value = $this->connect->real_escape_string($value);
-    //         $values .= "'{$value}', ";
-    //         $fields .= "`{$field}`, ";
-    //     }
-
-    //     $values = substr($values, 0, -2);
-    //     $fields = substr($fields, 0, -2);
-
-    //     return $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
-    // }
-
     public function addTo(
         string $tableName,
         array $fieldsToValues
