@@ -6,11 +6,11 @@
         <form action="" method="POST">
             <label class="field">
                 <div>Заголовок</div>
-                <input type="text" name="title" maxlength="100" autocomplete="off" value="<?= $this->section['title'] ?>" required>
+                <input type="text" name="title" maxlength="100" autocomplete="off" value="<?= $this->section->title ?>" required>
             </label>
             <label class="field">
                 <div>Описание</div>
-                <textarea name="description" rows="8"><?= $this->section['description'] ?></textarea>
+                <textarea name="description" rows="8"><?= $this->section->description ?></textarea>
             </label>
             <div class="toolbar">
                 <input type="submit" name="edit" value="Изменить">

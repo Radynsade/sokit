@@ -1,6 +1,7 @@
 {
     "main": {
-        "theme": "default"
+        "theme": "default",
+        "timezone": "Europe/Riga"
     },
     "router": {
         "404": "NotFound",

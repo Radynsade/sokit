@@ -33,16 +33,13 @@ final class EditPost extends Page {
 
     private function onFormSubmit() : void {
         Tools::onSubmit('add', function() {
-            $section = new Section($_POST['title'], $_POST['description']);
-            $section->upload();
-            unset($section);
+            $this->section = Section::create($_POST['title'], $_POST['description'], $_SESSION['user']);
+            $this->section->upload();
             Tools::redirect('/');
         });
 
         Tools::onSubmit('edit', function() {
-            $section = new Section($_POST['title'], $_POST['description']);
-            $section->update($GLOBALS['url']['id']);
-            unset($section);
+            $this->section->update($_POST['title'], $_POST['description']);
             Tools::redirect('/');
         });
     }

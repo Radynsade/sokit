@@ -43,8 +43,9 @@ class Auth {
         }
 
         $connect->addTo('users', [
-            $encryptedLogin => 'username',
-            Auth::hashPassword($newPassword) => 'password'
+            'username' => $encryptedLogin,
+            'password' => Auth::hashPassword($newPassword),
+            'last_visit' => Tools::getNow()
         ]);
 
         return true;
@@ -55,6 +56,7 @@ class Auth {
         string $password,
         string $location
     ) : bool {
+        global $connect;
         $userData = Auth::getUserData($username);
 
         if (empty($userData)) {
@@ -66,6 +68,10 @@ class Auth {
             Auth::$error = 'Неверный пароль!';
             return false;
         }
+
+        $connect->update('users', [
+            'last_visit' => Tools::getNow()
+        ], 'id', $userData['id']);
 
         $_SESSION['user'] = $userData['id'];
         Tools::redirect($location);

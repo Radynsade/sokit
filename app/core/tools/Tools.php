@@ -17,4 +17,8 @@ class Tools {
         header("Location: {$path}");
         die();
     }
+
+    public static function getNow() {
+        return date('Y-m-d H:i:s');
+    }
 }

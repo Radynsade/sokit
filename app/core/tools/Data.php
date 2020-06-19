@@ -77,41 +77,57 @@ class Data {
         );
     }
 
+    // Backup
+    // public function addTo(
+    //     string $tableName,
+    //     array $valuesToFields
+    // ) : bool {
+    //     $values = '';
+    //     $fields = '';
+
+    //     foreach ($valuesToFields as $value => $field) {
+    //         $value = $this->connect->real_escape_string($value);
+    //         $values .= "'{$value}', ";
+    //         $fields .= "`{$field}`, ";
+    //     }
+
+    //     $values = substr($values, 0, -2);
+    //     $fields = substr($fields, 0, -2);
+
+    //     return $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
+    // }
+
     public function addTo(
         string $tableName,
-        array $valuesToFields
-    ) : bool {
-        $values = '';
-        $fields = '';
+        array $fieldsToValues
+    ): bool {
+        $newValues = '';
 
-        foreach ($valuesToFields as $value => $field) {
+        foreach ($fieldsToValues as $field => $value) {
             $value = $this->connect->real_escape_string($value);
-            $values .= "'{$value}', ";
-            $fields .= "`{$field}`, ";
+            $newValues .= "`{$field}`='$value', ";
         }
 
-        $values = substr($values, 0, -2);
-        $fields = substr($fields, 0, -2);
+        $newValues = substr($newValues, 0, -2);
 
-        return $this->query("INSERT INTO `{$tableName}` ({$fields}) VALUES ({$values});");
+        return $this->query("INSERT INTO `{$tableName}` SET {$newValues};");
     }
 
     public function update(
         string $tableName,
-        array $valuesToFields,
+        array $fieldsToValues,
         string $conditionField,
         $conditionValue
     ) : bool {
         $newValues = '';
 
-        foreach ($valuesToFields as $value => $field) {
+        foreach ($fieldsToValues as $field => $value) {
             $value = $this->connect->real_escape_string($value);
             $newValues .= "`{$field}`='$value', ";
         }
 
         $newValues = substr($newValues, 0, -2);
         $sql = "UPDATE `{$tableName}` SET {$newValues} WHERE `{$conditionField}`='{$conditionValue}';";
-        var_dump($sql);
 
         return $this->query($sql);
     }

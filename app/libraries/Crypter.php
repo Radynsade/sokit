@@ -45,10 +45,12 @@ class Crypter {
         );
     }
 
+    // Experimental
     public function setPrivateKey(string $pathToFile) : void {
         $this->privateKey = openssl_pkey_get_private($pathToFile);
     }
 
+    // Experimental
     public function setPublicKey(string $pathToFile) : void {
         $this->publicKey = openssl_pkey_get_public($pathToFile);
     }
