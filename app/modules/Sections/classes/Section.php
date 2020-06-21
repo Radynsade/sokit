@@ -70,9 +70,7 @@ class Section {
         );
     }
 
-    public static function getAll() : array {
-        global $connect;
-
-        return Query::with('sections')->get();
+    public static function getAll() {
+        return Query::with('sections')->get(false);
     }
 }

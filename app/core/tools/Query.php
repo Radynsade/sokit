@@ -24,7 +24,9 @@ final class Query {
         return new Query($tableName);
     }
 
-    private function send(string $sql) {
+    // Send query to the MySQL database and gives response
+    // Automatic fetching returns a single associative array if there is only one row in result
+    private function send(string $sql, bool $autoFetch = false) {
         global $connect;
 
         $response = $connect->query($sql);
@@ -75,11 +77,11 @@ final class Query {
         $this->send($sql);
     }
 
-    public function get() {
+    public function get(bool $autoFetch = false) {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
         $this->action = 'get';
         $sql = trim("SELECT {$values} FROM {$this->table} {$this->where} {$this->order}") . ';';
-        return $this->send($sql);
+        return $this->send($sql, $autoFetch);
     }
 
     public function update() : void {
