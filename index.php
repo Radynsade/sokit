@@ -5,7 +5,6 @@ require_once './predefined.php';
 use core\Router;
 use core\Builder;
 use core\tools\Query;
-use core\tools\Tools;
 
 session_start();
 
@@ -14,16 +13,6 @@ $router = new Router($config['router']);
 $router->readPath($_SERVER['REQUEST_URI']);
 $GLOBALS['url'] = $router->result['url'] ?? [];
 $GLOBALS['view'] = $router->result['view'] ?? '';
-
-$query = Query::write('users')
-    ->data(['username', 'email', 'password'])
-    ->orderBy('id')
-    ->get()
-    ->sql;
-
-var_dump($query);
-$user = $connect->send($query);
-var_dump($user);
 
 // Render page
 Builder::render($router->result['view'], $config['main']['theme']);

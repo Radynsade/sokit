@@ -15,7 +15,6 @@ final class EditPost extends Page {
         $this->title = 'Разделы';
         $this->description = 'Страница разделов пользователя';
         $this->keywords = 'страница, разделы, разделов, пользователь, профиль, пользователя';
-        $this->onFormSubmit();
 
         if (empty($GLOBALS['url']['id'])) {
             $this->setContent('AddForm.phtml');
@@ -23,6 +22,8 @@ final class EditPost extends Page {
             $this->section = Section::get($GLOBALS['url']['id']);
             $this->setContent('EditForm.phtml');
         }
+
+        $this->onFormSubmit();
     }
 
     private function beforeLoad() : void {

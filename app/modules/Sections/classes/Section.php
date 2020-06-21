@@ -2,6 +2,8 @@
 
 namespace modules\Sections;
 
+use core\tools\Query;
+
 class Section {
     public $title;
     public $decription;
@@ -21,35 +23,32 @@ class Section {
     }
 
     public function upload() : void {
-        global $connect;
-
-        var_dump($this->title);
-
-        $connect->addTo('sections', [
-            'title' => $this->title,
-            'description' => $this->description,
-            'author' => $this->author
-        ]);
+        Query::with('sections')
+            ->data([
+                'title' => $this->title,
+                'description' => $this->description,
+                'author' => $this->author
+            ])
+            ->insert();
     }
 
     public function update(
         string $title,
         string $description
     ) : void {
-        global $connect;
-
-        $connect->update('sections', [
-            'title' => $title,
-            'description' => $description
-        ], 'id', $this->id);
+        Query::with('sections')
+            ->data([
+                'title' => $title,
+                'description' => $description
+            ])
+            ->where(['id' => $this->id])
+            ->update();
     }
 
     public static function get(int $id) : object {
-        global $connect;
-
-        $sectionData = $connect->getFrom('sections', [], [
-            'where' => ['id', $id]
-        ])[0];
+        $sectionData = Query::with('sections')
+            ->where(['id' => $id])
+            ->get();
 
         return new Section(
             $sectionData['title'],
@@ -74,6 +73,6 @@ class Section {
     public static function getAll() : array {
         global $connect;
 
-        return $connect->getFrom('sections', []);
+        return Query::with('sections')->get();
     }
 }

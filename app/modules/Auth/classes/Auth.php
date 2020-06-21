@@ -3,6 +3,7 @@
 namespace modules\Auth;
 
 use core\tools\Tools;
+use core\tools\Query;
 
 class Auth {
     public static $error;
@@ -24,7 +25,6 @@ class Auth {
         string $newPassword,
         string $repeatPassword
     ) : bool {
-        global $connect;
         $encryptedLogin = Auth::$crypter->encrypt($username);
 
         if ($newPassword !== $repeatPassword) {
@@ -32,21 +32,22 @@ class Auth {
             return false;
         }
 
-        $sameUsernames = $connect->getFrom('users', ['username'], [
-            'where' => ['username', $encryptedLogin],
-            'orderBy' => ['id', 'DESC']
-        ]);
+        $sameUsernames = Query::with('users')
+            ->where(['username' => $encryptedLogin])
+            ->get();
 
         if (!empty($sameUsernames)) {
             Auth::$error = 'Пользователь с таким именем уже существует!';
             return false;
         }
 
-        $connect->addTo('users', [
-            'username' => $encryptedLogin,
-            'password' => Auth::hashPassword($newPassword),
-            'last_visit' => Tools::getNow()
-        ]);
+        Query::with('users')
+            ->data([
+                'username' => $encryptedLogin,
+                'password' => Auth::hashPassword($newPassword),
+                'last_visit' => Tools::getNow()
+            ])
+            ->insert();
 
         return true;
     }
@@ -56,7 +57,6 @@ class Auth {
         string $password,
         string $location
     ) : bool {
-        global $connect;
         $userData = Auth::getUserData($username);
 
         if (empty($userData)) {
@@ -69,9 +69,11 @@ class Auth {
             return false;
         }
 
-        $connect->update('users', [
-            'last_visit' => Tools::getNow()
-        ], 'id', $userData['id']);
+        Query::with('users')
+            ->data([
+                'last_visit' => Tools::getNow()
+            ])
+            ->update();
 
         $_SESSION['user'] = $userData['id'];
         Tools::redirect($location);
@@ -88,12 +90,15 @@ class Auth {
     }
 
     private static function getUserData(string $username) : array {
-        global $connect;
         $encryptedLogin = Auth::$crypter->encrypt($username);
-        $userData = $connect->getFrom('users', ['id', 'username', 'password'], [
-            'where' => ['username', $encryptedLogin]
-        ]);
 
-        return !empty($userData) ? $userData[0] : [];
+        $userData = Query::with('users')
+            ->data(['id', 'username', 'password'])
+            ->where(['username' => $encryptedLogin])
+            ->get();
+
+        var_dump($userData);
+
+        return !empty($userData) ? $userData : [];
     }
 }

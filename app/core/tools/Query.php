@@ -7,11 +7,11 @@
 namespace core\tools;
 
 final class Query {
-    private $table;
-    private $action;
-    private $values;
-    private $order;
-    private $where;
+    public $table;
+    public $action;
+    public $values;
+    public $order;
+    public $where;
     public $sql;
 
     // Constructor
@@ -20,8 +20,19 @@ final class Query {
     }
 
     // Factory
-    public static function write(string $tableName) : object {
+    public static function with(string $tableName) : object {
         return new Query($tableName);
+    }
+
+    private function send(string $sql) {
+        global $connect;
+
+        $response = $connect->query($sql);
+
+        if ($response->num_rows > 0) {
+            if ($response->num_rows === 1) return $connect->fetchOne($response);
+            return $connect->fetchResult($response);
+        }
     }
 
     // Set values or fields => values
@@ -34,9 +45,11 @@ final class Query {
         Conditions & additional
     */
     public function where(array $fieldsToValues) : object {
+        global $connect;
         $conditions = '';
 
         foreach ($fieldsToValues as $field => $value) {
+            $value = $connect->connect->real_escape_string($value);
             $conditions .= "`{$field}` = '{$value}' AND";
         }
 
@@ -55,32 +68,50 @@ final class Query {
     /*
         Actions
     */
-    public function insert() : object {
-        $values = !empty($this->values) ? $this->joinAssoc($this->values) : '*';
+    public function insert() : void {
+        $values = $this->joinAssoc($this->values);
         $this->action = 'insert';
-        $this->sql = trim("INSERT INTO {$this->table} SET {$values}") . ';';
-        return $this;
+        $sql = trim("INSERT INTO {$this->table} SET {$values}") . ';';
+        $this->send($sql);
     }
 
-    public function get() : object {
+    public function get() {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
         $this->action = 'get';
-        $this->sql = trim("SELECT {$values} FROM {$this->table} {$this->where} {$this->order}") . ';';
-        return $this;
+        $sql = trim("SELECT {$values} FROM {$this->table} {$this->where} {$this->order}") . ';';
+        return $this->send($sql);
+    }
+
+    public function update() : void {
+        $values = $this->joinAssoc($this->values);
+        $this->action = 'update';
+        $sql = trim("UPDATE {$this->table} SET {$values} {$this->where}") . ';';
+        $this->send($sql);
     }
 
     /*
         Internal
     */
     private function joinValues(array $values) : string {
-        return '`' . implode('`, `', $values) . '`';
+        global $connect;
+
+        $newValues = [];
+
+        foreach ($values as $value) {
+            $value = $connect->connect->real_escape_string($value);
+            array_push($newValues, $value);
+        }
+
+        return '`' . implode('`, `', $newValues) . '`';
     }
 
     private function joinAssoc(array $assoc) : string {
+        global $connect;
+
         $sql = '';
 
         foreach ($assoc as $field => $value) {
-            $value = $this->connect->real_escape_string($value);
+            $value = $connect->connect->real_escape_string($value);
             $sql .= "`{$field}`='$value', ";
         }
 
