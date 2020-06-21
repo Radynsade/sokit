@@ -11,7 +11,7 @@ final class Query {
     private $action;
     private $values;
     private $order;
-    private $where = [];
+    private $where;
     public $sql;
 
     // Constructor

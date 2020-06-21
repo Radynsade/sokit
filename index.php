@@ -16,14 +16,12 @@ $GLOBALS['url'] = $router->result['url'] ?? [];
 $GLOBALS['view'] = $router->result['view'] ?? '';
 
 $query = Query::write('users')
-    ->where([
-        'id' => 1
-    ])
     ->data(['username', 'email', 'password'])
     ->orderBy('id')
     ->get()
     ->sql;
 
+var_dump($query);
 $user = $connect->send($query);
 var_dump($user);
 
