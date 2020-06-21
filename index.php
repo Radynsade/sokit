@@ -20,10 +20,12 @@ $query = Query::write('users')
         'id' => 1
     ])
     ->data(['username', 'email', 'password'])
+    ->orderBy('id')
     ->get()
     ->sql;
 
-var_dump($query);
+$user = $connect->send($query);
+var_dump($user);
 
 // Render page
 Builder::render($router->result['view'], $config['main']['theme']);

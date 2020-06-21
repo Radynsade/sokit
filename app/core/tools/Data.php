@@ -30,8 +30,13 @@ class Data {
     }
 
     // Send any query and give response
-    public function send()  {
+    public function send(string $sql)  {
+        $response = $this->query($sql);
 
+        if ($response->num_rows > 0) {
+            if ($response->num_rows === 1) return Data::fetchOne($response);
+            return Data::fetchResult($response);
+        }
     }
 
     public function query($sql) {
@@ -55,7 +60,7 @@ class Data {
         string $orderBy = 'id',
         string $order = 'DESC'
     ) : array {
-        return $this->fetchResult($this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}"));
+        return Data::fetchResult($this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}"));
     }
 
     public function getFrom(
@@ -76,8 +81,7 @@ class Data {
             $columnsList = '*';
         }
 
-
-        return $this->fetchResult(
+        return Data::fetchResult(
             $this->query("SELECT {$columnsList} from `{$tableName}`" . $where . $orderBy . ';')
         );
     }
@@ -141,23 +145,27 @@ class Data {
         }
     }
 
-    public function fetchResult(object $queryResult) : array {
+    private static function fetchResult(object $queryResult) : array {
         $result = [];
 
         if ($queryResult->num_rows > 0) {
             while ($row = $queryResult->fetch_assoc()) {
-                $data = [];
+                // $data = [];
 
-                foreach ($row as $key => $value) {
-                    $data[$key] = $value;
-                }
+                // foreach ($row as $key => $value) {
+                    // $data[$key] = $value;
+                // }
 
-                array_push($result, $data);
+                array_push($result, $row);
                 unset($data);
             }
         }
 
         return $result;
+    }
+
+    private static function fetchOne(object $queryResult) : array {
+        return $queryResult->fetch_assoc();
     }
 
     private static function schemaToSQL(array $schema) : string {
