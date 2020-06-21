@@ -26,13 +26,15 @@ final class Query {
 
     // Send query to the MySQL database and gives response
     // Automatic fetching returns a single associative array if there is only one row in result
-    private function send(string $sql, bool $autoFetch = false) {
+    private function send(string $sql, bool $autoFetch = true) {
         global $connect;
 
         $response = $connect->query($sql);
 
         if ($response->num_rows > 0) {
-            if ($response->num_rows === 1) return $connect->fetchOne($response);
+            if ($autoFetch) {
+                if ($response->num_rows === 1) return $connect->fetchOne($response);
+            }
             return $connect->fetchResult($response);
         }
     }
@@ -77,7 +79,7 @@ final class Query {
         $this->send($sql);
     }
 
-    public function get(bool $autoFetch = false) {
+    public function get(bool $autoFetch = true) {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
         $this->action = 'get';
         $sql = trim("SELECT {$values} FROM {$this->table} {$this->where} {$this->order}") . ';';
