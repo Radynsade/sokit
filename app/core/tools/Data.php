@@ -29,6 +29,11 @@ class Data {
         $this->connect->close();
     }
 
+    // Send any query and give response
+    public function send()  {
+
+    }
+
     public function query($sql) {
         $query = $this->connect->query($sql);
 
@@ -50,7 +55,7 @@ class Data {
         string $orderBy = 'id',
         string $order = 'DESC'
     ) : array {
-        return Data::fetchResult($this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}"));
+        return $this->fetchResult($this->query("SELECT * FROM `{$tableName}` ORDER BY `{$orderBy}` {$order}"));
     }
 
     public function getFrom(
@@ -72,7 +77,7 @@ class Data {
         }
 
 
-        return Data::fetchResult(
+        return $this->fetchResult(
             $this->query("SELECT {$columnsList} from `{$tableName}`" . $where . $orderBy . ';')
         );
     }
@@ -136,7 +141,7 @@ class Data {
         }
     }
 
-    private static function fetchResult(object $queryResult) : array {
+    public function fetchResult(object $queryResult) : array {
         $result = [];
 
         if ($queryResult->num_rows > 0) {

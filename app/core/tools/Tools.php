@@ -18,7 +18,12 @@ class Tools {
         die();
     }
 
-    public static function getNow() {
+    public static function getNow() : string {
         return date('Y-m-d H:i:s');
+    }
+
+    public static function isAssoc(array $array) : bool {
+        if (array() === $array) return false;
+        return array_keys($array) !== range(0, count($array) - 1);
     }
 }

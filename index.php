@@ -4,7 +4,8 @@ require_once './predefined.php';
 
 use core\Router;
 use core\Builder;
-use core\tools\SQLB;
+use core\tools\Query;
+use core\tools\Tools;
 
 session_start();
 
@@ -14,7 +15,7 @@ $router->readPath($_SERVER['REQUEST_URI']);
 $GLOBALS['url'] = $router->result['url'] ?? [];
 $GLOBALS['view'] = $router->result['view'] ?? '';
 
-$query = SQLB::write('users')
+$query = Query::write('users')
     ->where([
         'id' => 1
     ])
@@ -22,7 +23,7 @@ $query = SQLB::write('users')
     ->get()
     ->sql;
 
-var_dump($connect->query($query));
+var_dump($query);
 
 // Render page
 Builder::render($router->result['view'], $config['main']['theme']);

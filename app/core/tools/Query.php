@@ -6,7 +6,7 @@
 
 namespace core\tools;
 
-final class SQLB {
+final class Query {
     private $table;
     private $action;
     private $values;
@@ -21,7 +21,7 @@ final class SQLB {
 
     // Factory
     public static function write(string $tableName) : object {
-        return new SQLB($tableName);
+        return new Query($tableName);
     }
 
     // Set values or fields => values
@@ -46,18 +46,26 @@ final class SQLB {
         return $this;
     }
 
+    public function orderBy(string $field, string $order = 'desc') {
+        $order = strtoupper($order);
+        $this->order = "ORDER BY `{$field}` {$order}";
+        return $this;
+    }
+
     /*
         Actions
     */
     public function insert() : object {
+        $values = !empty($this->values) ? $this->joinAssoc($this->values) : '*';
         $this->action = 'insert';
+        $this->sql = trim("INSERT INTO {$this->table} SET {$values}") . ';';
         return $this;
     }
 
     public function get() : object {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
         $this->action = 'get';
-        $this->sql = "SELECT {$values} FROM {$this->table} {$this->where};";
+        $this->sql = trim("SELECT {$values} FROM {$this->table} {$this->where} {$this->order}") . ';';
         return $this;
     }
 
@@ -65,6 +73,17 @@ final class SQLB {
         Internal
     */
     private function joinValues(array $values) : string {
-        return '`' . implode('`, `', $this->values) . '`';
+        return '`' . implode('`, `', $values) . '`';
+    }
+
+    private function joinAssoc(array $assoc) : string {
+        $sql = '';
+
+        foreach ($assoc as $field => $value) {
+            $value = $this->connect->real_escape_string($value);
+            $sql .= "`{$field}`='$value', ";
+        }
+
+        return substr($sql, 0, -2);
     }
 }
