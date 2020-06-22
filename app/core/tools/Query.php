@@ -26,7 +26,7 @@ final class Query {
 
     // Send query to the MySQL database and gives response
     // Automatic fetching returns a single associative array if there is only one row in result
-    private function send(string $sql, bool $autoFetch = true) {
+    public static function send(string $sql, bool $autoFetch = true) {
         global $connect;
 
         $response = $connect->query($sql);
@@ -37,6 +37,13 @@ final class Query {
             }
             return $connect->fetchResult($response);
         }
+    }
+
+    // Send query and get response without fetching any data
+    public static function write($sql) {
+        global $connect;
+
+        return $connect->query($sql);
     }
 
     // Set values or fields => values
@@ -76,23 +83,29 @@ final class Query {
         $values = $this->joinAssoc($this->values);
         $this->action = 'insert';
         $sql = trim("INSERT INTO {$this->table} SET {$values}") . ';';
-        $this->send($sql);
+        Query::send($sql);
     }
 
     public function get(bool $autoFetch = true) {
         $values = !empty($this->values) ? $this->joinValues($this->values) : '*';
         $this->action = 'get';
         $sql = trim("SELECT {$values} FROM {$this->table} {$this->where} {$this->order}") . ';';
-        return $this->send($sql, $autoFetch);
+        return Query::send($sql, $autoFetch);
     }
 
     public function update() : void {
         $values = $this->joinAssoc($this->values);
         $this->action = 'update';
         $sql = trim("UPDATE {$this->table} SET {$values} {$this->where}") . ';';
-        $this->send($sql);
+        Query::send($sql);
     }
 
+    public function count() {
+        $values = !empty($this->values) ? $this->joinCount($this->values) : 'COUNT(id) AS count';
+        $this->action = 'count';
+        $sql = trim("SELECT {$values} FROM {$this->table} {$this->where}") . ';';
+        return !empty($this->values) ? Query::send($sql) : Query::send($sql)['count'];
+    }
     /*
         Internal
     */
@@ -120,5 +133,15 @@ final class Query {
         }
 
         return substr($sql, 0, -2);
+    }
+
+    private function joinCount($fields) : string {
+        $countString = '';
+
+        foreach ($fields as $field) {
+            $countString .= "COUNT({$field}) AS {$field}, ";
+        }
+
+        return substr($countString, 0, -2);
     }
 }
