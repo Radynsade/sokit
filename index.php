@@ -4,7 +4,6 @@ require_once './predefined.php';
 
 use core\Router;
 use core\Builder;
-use core\tools\Query;
 
 session_start();
 
