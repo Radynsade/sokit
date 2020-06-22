@@ -4,8 +4,11 @@ require_once './predefined.php';
 
 use core\Router;
 use core\Builder;
+use core\Post;
 
 session_start();
+
+Post::recieve();
 
 // Create router
 $router = new Router($config['router']);

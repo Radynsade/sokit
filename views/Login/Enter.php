@@ -2,14 +2,15 @@
 
 namespace views\Login;
 
-use core\tools\Tools;
 use modules\Auth\Auth;
+use core\Post;
+use core\tools\Tools;
 
 class Enter {
     public function __construct() {
         if (!Auth::enter($_POST['username'], $_POST['password'], '/')) {
-            $this->errorMessage = Auth::$error;
-            return;
+            Post::send('AuthError', Auth::$error);
+            Tools::redirect('/login');
         };
     }
 }
