@@ -23,7 +23,7 @@ final class EditPost extends Page {
             $this->setContent('EditForm.phtml');
         }
 
-        $this->onFormSubmit();
+        // $this->onFormSubmit();
     }
 
     private function beforeLoad() : void {

@@ -8,10 +8,17 @@ window.onload = () => {
             const viewField = document.createElement('input');
 
             viewField.type = 'hidden';
-            viewField.name = 'view';
+            viewField.name = 'viewName';
             viewField.value = document.querySelector('main').id;
 
-            form.appendChild(viewField);
+            const actionField = document.createElement('input');
+
+            actionField.type = 'hidden';
+            actionField.name = 'actionName';
+            actionField.value = form.getAttribute('data-action');
+
+            form.prepend(viewField);
+            form.prepend(actionField);
             form.submit();
         });
     });

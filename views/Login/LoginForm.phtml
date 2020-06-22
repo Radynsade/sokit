@@ -6,7 +6,7 @@
         <?php if (!empty($this->errorMessage)) { ?>
             <div class="error-message"><?= $this->errorMessage ?></div>
         <?php } ?>
-        <form>
+        <form data-action="Enter">
             <label class="field">
                 <div>Имя пользователя</div>
                 <input type="text" name="username" minlength="4" maxlength="32" required>

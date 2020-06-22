@@ -3,7 +3,8 @@
         <h1>Редактировать раздел</h1>
     </header>
     <article>
-        <form>
+        <form data-action="Edit">
+            <input type="hidden" name="sectionId" value="<?= $GLOBALS['url']['id'] ?>">
             <label class="field">
                 <div>Заголовок</div>
                 <input type="text" name="title" maxlength="100" autocomplete="off" value="<?= $this->section->title ?>" required>
