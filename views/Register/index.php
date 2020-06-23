@@ -12,7 +12,7 @@ final class Register extends Page {
         $this->title = 'Регистрация';
         $this->description = 'Страница регистрации';
         $this->keywords = 'вход, страница, регистрация, регистрации, новый, аккаунт, профиль';
-        $this->onFormSubmit();
+        if (!empty($_POST['AuthError'])) $this->errorMessage = $_POST['AuthError'];
         $this->setContent('RegForm.phtml');
     }
 
