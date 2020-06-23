@@ -3,7 +3,7 @@ window.onload = () => {
         form.addEventListener('submit', event => {
             event.preventDefault();
             form.method = 'POST';
-            form.action = './handler.php';
+            form.action = '/handler.php';
 
             const viewField = document.createElement('input');
 
