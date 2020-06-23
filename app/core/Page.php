@@ -41,7 +41,7 @@ abstract class Page {
     private function writeAndCache(string $fileName) : void {
         ob_start();
 
-        $cached = fopen('./cached/' . $this->cacheFile, 'w');
+        $cached = fopen($this->cacheFile, 'w');
         include_once './views/' . $this->getViewName() . '/' . $fileName;
         $this->content = ob_get_contents();
         fwrite($cached, ob_get_contents());
