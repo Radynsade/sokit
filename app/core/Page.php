@@ -24,9 +24,7 @@ abstract class Page {
         $this->setCacheFileName($fileName);
 
         if ($this->isCached()) {
-            echo 'ULALALLALALA';
-            die;
-            $this->content = readFile($this->cacheFile);
+            $this->content = file_get_contents($this->cacheFile);
             return;
         }
 
@@ -55,7 +53,7 @@ abstract class Page {
     private function setCacheFileName(string $fileName) : void {
         $realPath = Tools::getRealPath($_SERVER['REQUEST_URI']);
         $namePath = !empty($realPath) ? '-' . str_replace('/', '-', $realPath) : '';
-        $this->cacheFile = $this->getViewName() . '-' . substr_replace($fileName, "", -6) . $namePath . '.html';
+        $this->cacheFile = './cached/' . $this->getViewName() . '-' . substr_replace($fileName, "", -6) . $namePath . '.html';
     }
 
     private function isCached() : bool {
