@@ -24,6 +24,8 @@ abstract class Page {
         $this->setCacheFileName($fileName);
 
         if ($this->isCached()) {
+            echo 'ULALALLALALA';
+            die;
             $this->content = readFile($this->cacheFile);
             return;
         }
@@ -57,7 +59,7 @@ abstract class Page {
     }
 
     private function isCached() : bool {
-        return (file_exists($this->cacheFile) && time() - $this->cacheTime < filemtime($this->cacheFile));
+        return file_exists($this->cacheFile);
     }
 
     protected function getViewName() : string {
