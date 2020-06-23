@@ -11,7 +11,6 @@ abstract class Page {
     public $author;
     public $content;
     protected $cacheFile;
-    private $cacheTime = 18000;
 
     abstract public function __construct();
 
@@ -53,7 +52,7 @@ abstract class Page {
     private function setCacheFileName(string $fileName) : void {
         $realPath = Tools::getRealPath($_SERVER['REQUEST_URI']);
         $namePath = !empty($realPath) ? '-' . str_replace('/', '-', $realPath) : '';
-        $this->cacheFile = './cached/' . $this->getViewName() . '-' . substr_replace($fileName, "", -6) . $namePath . '.html';
+        $this->cacheFile = './cached/' . $this->getViewName() . '-' . substr_replace($fileName, '', -6) . $namePath . '.html';
     }
 
     private function isCached() : bool {
@@ -62,5 +61,15 @@ abstract class Page {
 
     protected function getViewName() : string {
         return (new \ReflectionClass($this))->getShortName();
+    }
+
+    public static function cleanCache(
+        string $viewName,
+        string $templateName,
+        string $path
+    ) : void {
+        $realPath = Tools::getRealPath($path);
+        $namePath = !empty($realPath) ? '-' . str_replace('/', '-', $realPath) : '';
+        unlink('./cached/' . $viewName . '-' . substr_replace($templateName, '', -6) . $namePath . '.html');
     }
 }
