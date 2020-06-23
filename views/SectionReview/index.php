@@ -13,6 +13,6 @@ final class SectionReview extends Page {
         $this->description = 'Страница раздела ###';
         $this->keywords = 'разделы, страница, создать, секции';
         $this->section = Section::get($GLOBALS['url']['id']);
-        $this->setContent('Section.phtml');
+        $this->setContent('Section.phtml', true);
     }
 }

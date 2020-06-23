@@ -26,4 +26,10 @@ class Tools {
         if (array() === $array) return false;
         return array_keys($array) !== range(0, count($array) - 1);
     }
+
+    public static function getRealPath(string $path) : string {
+        return substr($path, -1) === '/'
+            ? substr(substr($path, 1), 0, -1)
+            : substr($path, 1);
+    }
 }
