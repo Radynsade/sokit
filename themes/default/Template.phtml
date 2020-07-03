@@ -25,7 +25,16 @@
     </head>
     <body>
         <header>
-            <span>Ardy Studio Topics</span>
+            <div class="wrapper">
+                <div>Topics</div>
+                <label class="field" id="search">
+                    <input type="text" name="search">
+                </label>
+                <!-- <nav> -->
+                    <!-- <div>My profile</div> -->
+                    <!-- <div>Topics</div> -->
+                <!-- </nav> -->
+            </div>
         </header>
         <main id="<?= $viewName ?>">
             <?= $page->content ?>

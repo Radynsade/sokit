@@ -22,7 +22,7 @@ class Data {
 
         if ($this->connect->connect_error) die("Соединениться не удалось: {$this->connect->connect_error}");
 
-        $this->connect->set_charset('utf8');
+        $this->connect->set_charset('utf8mb4');
     }
 
     public function close() : void {

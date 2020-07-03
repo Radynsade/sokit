@@ -70,3 +70,10 @@ input[type=submit],
     align-content: center;
     align-items: center;
 }
+
+#search {
+    input {
+        padding: 6px 10px;
+        width: 240px;
+    }
+}
